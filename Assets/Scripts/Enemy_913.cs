@@ -14,6 +14,8 @@ public class Enemy_913 : MonoBehaviour
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
 
+    private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
+
     // AI behavior state
     [System.Serializable]
     public enum AIState{
@@ -48,8 +50,9 @@ public class Enemy_913 : MonoBehaviour
         // controls the AI behvaior (see the FSM diagram)
         switch(curState){
             case AIState.Idle:
+                // doesn't matter, don't do nothing lol
+                // maybe animation?
                 break;
-
 
 
             case AIState.Patrol:
@@ -70,6 +73,22 @@ public class Enemy_913 : MonoBehaviour
             case AIState.Shoot:
                 break;
         }
+
+
+
+
+    }
+
+
+    //=================    HELPER FUNCTIONS   ===================//
+
+    // checks if one point is close enough to another (X and Y axis)
+    bool InRange2D(Transform a, Transform b, float d){
+        return Vector2.Distance(a.position,b.position) < d;
+    }
+
+    bool InRangeX(Transform a, Transform b, float d){
+        return Mathf.Abs(a.position.x - b.position.x) < d;
     }
 
 
@@ -78,13 +97,13 @@ public class Enemy_913 : MonoBehaviour
     // moves the enemy to a target position up until a certain distance with a speed (magnitude); option to ignore verticality
     void GoToTarget(Transform target, float magnitude, float minDist=0.0f, bool ignoreY=false){
         // not at the target yet, keep moving
-        if((ignoreY && Mathf.Abs(transform.position.x - target.position.x) > minDist) || Vector2.Distance(transform.position, target.position) > minDist){
-            // determine if the target is on the left or right
-            int dir = 0;
-            dir = transform.position.x > target.position.x ? -1 : 1;
+        if((ignoreY && !InRangeX(transform,target,minDist)) || !InRange2D(transform,target,minDist)){
+            // determine if the target is on the left or right (and face the appropriate direction)
+            int dir = transform.position.x > target.position.x ? -1 : 1;
+            SetDirection(dir);
 
             // move to target
-            Move(dir,magnitude);
+            Move(magnitude);
         }
         // otherwise, wait at the point, and start again
         else if(curState == AIState.Patrol){
@@ -110,8 +129,9 @@ public class Enemy_913 : MonoBehaviour
     //=================    CONTROL FUNCTIONS   ===================//
 
     // moves the character towards a specific direction (left: -1, right: 1, none: 0) with a specific magnitude (0-1)
-    void Move(int hor_dir, float magnitude){
-        transform.Translate(Vector2.right * hor_dir * magnitude * Time.deltaTime);
+    void Move(float magnitude){
+        // transform.Translate((facingRight ? Vector2.right : Vector2.left) * magnitude * Time.deltaTime);
+        transform.Translate(Vector2.right * magnitude * Time.deltaTime);
     }
 
     // shoots at a target (trigger event)
@@ -119,5 +139,17 @@ public class Enemy_913 : MonoBehaviour
         return;
     }
 
+    // sets the direction of the enemy (left = -1, right = everything else)
+    void SetDirection(int dir){
+        if(dir == -1 && facingRight){
+            facingRight = false;
+            transform.eulerAngles = new Vector3(0,180,0);
+            Debug.Log("to the left");
+        }else if(dir != -1 && !facingRight){
+            facingRight = true;
+            transform.eulerAngles = new Vector3(0,0,0);
+            Debug.Log("to the right");
+        }
+    }
 
 }
