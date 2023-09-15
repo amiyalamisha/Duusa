@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Enemy_913 : MonoBehaviour
 {
+    
     //---- HIDDEN VARIABLES 
+    private bool debugView = true;              // whether to show the debug view and outputs to the console
     private Transform player;                     // player object
-    private DetectionRange detectRange;           // object for detecting
+    private DetectionRange lookRange;           // object for detecting while patroling (triangle)
+    private DetectionRange shootRange;           // object for detecting while shooting (circle)
+    private EnemyProjectileAttack projAtt;       // projectile attack script
 
 
     //---- ENEMY PROPERTIES
@@ -31,6 +35,9 @@ public class Enemy_913 : MonoBehaviour
     private int patrolInd = 0;              // current point in the patrol points
     public float waitPatrolTime = 2.0f;           // how long to wait at the patrol point before going to the next
 
+    public LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
+    public SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
+
 
     //=================    GENERAL UNITY FUNCTIONS   ===================//
 
@@ -38,9 +45,23 @@ public class Enemy_913 : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
 
+        // assign the range detectors if available
+        Transform pr = transform.Find("PatrolRange");
+        if(pr != null){
+            lookRange = pr.GetComponent<DetectionRange>();
+            patrolArea = pr.GetComponent<LineRenderer>();
+        }
+
         // assign the range detector if available
-        if(transform.Find("DetectionRange"))
-            detectRange = transform.Find("DetectionRange").GetComponent<DetectionRange>();
+        Transform sr = transform.Find("ShootRange");
+        if(sr != null){
+            shootRange = sr.GetComponent<DetectionRange>();
+            shootArea = sr.GetComponent<SpriteRenderer>();
+        }
+
+        // assign the projectile attack script if available
+        if(transform.Find("Projectile"))
+            projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
     
     }
@@ -52,6 +73,11 @@ public class Enemy_913 : MonoBehaviour
             case AIState.Idle:
                 // doesn't matter, don't do nothing lol
                 // maybe animation?
+
+                // if medusa in range, chase her
+                if(lookRange.medusaInSight)
+                    curState = AIState.Chase;
+
                 break;
 
 
@@ -60,21 +86,62 @@ public class Enemy_913 : MonoBehaviour
                     GoToTarget(patrolPts[patrolInd], patrol_speed, 0.3f);
                 else                                        // otherwise be idle
                     curState = AIState.Idle;
+
+                // if medusa in range, chase her
+                if(lookRange.medusaInSight)
+                    curState = AIState.Chase;
                 break;
 
 
 
             case AIState.Chase:
+                // if not in range of Medusa, the move towards her
+                if(shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
+                    GoToTarget(shootRange.target, chase_speed, 3.0f, true);
+                }
+                // if lost the target, go back to patrol
+                else if(shootRange.target == null){
+                    curState = AIState.Idle;
+                    StartCoroutine(TranstitionState(AIState.Patrol, waitPatrolTime));
+                }
+                // otherwise try to shoot her
+                else if(InRangeX(transform, shootRange.target, 3.0f)){
+                    curState = AIState.Shoot;
+                }
+
                 break;
 
 
 
 
             case AIState.Shoot:
+                // if not in range of Medusa, switch to chasing her
+                if(shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
+                    if(projAtt != null && projAtt.canFire){
+                        Debug.Log("fire!");
+                        projAtt.FireBullet(shootRange.target);
+                    }
+                }
+                // if lost the target, go back to patrol after waiting a bit
+                else if(shootRange.target == null){
+                    curState = AIState.Idle;
+                    StartCoroutine(TranstitionState(AIState.Patrol, waitPatrolTime));
+                }
+                // otherwise try to shoot her
+                else if(!InRangeX(transform, shootRange.target, 3.0f)){
+                    curState = AIState.Chase;
+                }
                 break;
         }
 
 
+        // render areas for debugging
+        if(debugView && patrolArea){
+            patrolArea.enabled = curState == AIState.Patrol || curState == AIState.Idle;
+        }
+        if(debugView && shootArea){
+            shootArea.enabled = curState == AIState.Chase || curState == AIState.Shoot;
+        }
 
 
     }
@@ -87,6 +154,7 @@ public class Enemy_913 : MonoBehaviour
         return Vector2.Distance(a.position,b.position) < d;
     }
 
+    // checks if one point is close enough to another (only on the X axis)
     bool InRangeX(Transform a, Transform b, float d){
         return Mathf.Abs(a.position.x - b.position.x) < d;
     }
