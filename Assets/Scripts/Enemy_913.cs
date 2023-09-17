@@ -17,7 +17,6 @@ public class Enemy_913 : MonoBehaviour
 
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
-
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
 
     // AI behavior state
@@ -36,8 +35,8 @@ public class Enemy_913 : MonoBehaviour
     public float waitPatrolTime = 2.0f;     // how long to wait at the patrol point before going to the next
     public float patrolMinDist = 0.5f;      // minimum distance needed to reach a patrol point
 
-    public LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
-    public SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
+    private LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
+    private SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
 
 
     //=================    GENERAL UNITY FUNCTIONS   ===================//
@@ -203,21 +202,16 @@ public class Enemy_913 : MonoBehaviour
         transform.Translate(Vector2.right * magnitude * Time.deltaTime);
     }
 
-    // shoots at a target (trigger event)
-    void Shoot(){
-        return;
-    }
-
     // sets the direction of the enemy (left = -1, right = everything else)
     void SetDirection(int dir){
         if(dir == -1 && facingRight){
             facingRight = false;
             transform.eulerAngles = new Vector3(0,180,0);
-            Debug.Log("to the left");
+            // Debug.Log("to the left");
         }else if(dir != -1 && !facingRight){
             facingRight = true;
             transform.eulerAngles = new Vector3(0,0,0);
-            Debug.Log("to the right");
+            // Debug.Log("to the right");
         }
     }
 
