@@ -33,7 +33,8 @@ public class Enemy_913 : MonoBehaviour
     // patrol properties
     public List<Transform> patrolPts;       // points the AI moves to in patrol phase (goes in listed order before restarting at the top)
     private int patrolInd = 0;              // current point in the patrol points
-    public float waitPatrolTime = 2.0f;           // how long to wait at the patrol point before going to the next
+    public float waitPatrolTime = 2.0f;     // how long to wait at the patrol point before going to the next
+    public float patrolMinDist = 0.5f;      // minimum distance needed to reach a patrol point
 
     public LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
     public SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
@@ -83,7 +84,7 @@ public class Enemy_913 : MonoBehaviour
 
             case AIState.Patrol:
                 if(patrolPts.Count > 0)                     // if there are patrol points, go to them
-                    GoToTarget(patrolPts[patrolInd], patrol_speed, 0.3f);
+                    GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
                 else                                        // otherwise be idle
                     curState = AIState.Idle;
 
