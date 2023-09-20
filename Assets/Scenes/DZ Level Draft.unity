@@ -23163,6 +23163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 766262874}
   - component: {fileID: 766262875}
+  - component: {fileID: 766262876}
   m_Layer: 0
   m_Name: GrabbingSnakes
   m_TagString: Untagged
@@ -23288,6 +23289,28 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!68 &766262876
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766262873}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 64.48072, y: -0.2928462}
+  - {x: 64.68072, y: -0.2928462}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &795846784
 GameObject:
   m_ObjectHideFlags: 0
@@ -23445,38 +23468,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &830509770 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2259361165733840839, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
-  m_PrefabInstance: {fileID: 835525571}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &830509775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2259361165733840892, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
   m_PrefabInstance: {fileID: 835525571}
   m_PrefabAsset: {fileID: 0}
---- !u!68 &830509776
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830509770}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 0.5, y: 0}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1001 &835525571
 PrefabInstance:
   m_ObjectHideFlags: 0

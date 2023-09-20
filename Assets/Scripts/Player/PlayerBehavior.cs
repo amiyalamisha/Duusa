@@ -23,12 +23,13 @@ public class PlayerBehavior : MonoBehaviour
 
     private Rigidbody2D rb;         
     private List<Vector2> points = new List<Vector2>();     // all working movement snakes
+    private List<Vector2> edges = new List<Vector2>();
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        edgeCollider = GetComponent<EdgeCollider2D>();
+        edgeCollider = grabbingSnakes.GetComponent<EdgeCollider2D>();
         grav = rb.gravityScale;
 
         movementSnakes.positionCount = 0;
@@ -164,18 +165,25 @@ public class PlayerBehavior : MonoBehaviour
         grabbingSnakes.SetPosition(0, rb.position);
         grabbingSnakes.SetPosition(1, maxReach);
 
+        // hard coding only one snake for now
+        edges.Add(new Vector2(0, 0));
+
         GrabbingSnakeCollisions(grabbingSnakes);
-        Debug.Log(edgeCollider.points[0]);
+        //Debug.Log(edgeCollider.points[0].x);
     }
 
     void GrabbingSnakeCollisions(LineRenderer snake)
     {
-        List<Vector2> edges = new List<Vector2>();
+        /*List<Vector2> edges = new List<Vector2>();
 
         // hard coding only one snake for now
         Vector2 snakePoint = snake.GetPosition(1);      // for the end point position of the line
         edges.Add(new Vector2(snakePoint.x, snakePoint.y));
 
+        edgeCollider.SetPoints(edges);*/
+
+        Vector2 snakePoint = snake.GetPosition(1);
+        edges[0] = new Vector2(snakePoint.x, snakePoint.y);
         edgeCollider.SetPoints(edges);
     }
 
