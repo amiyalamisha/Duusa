@@ -846,11 +846,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 734370462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5a5950bcd26a4c24a8688bf40e21fb7, type: 3}
+  m_Script: {fileID: 11500000, guid: cf6d401decb6e4317801ececbd9c3c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patrol_speed: 2
-  chase_speed: 4
+  chase_speed: 3
   curState: 1
   patrolPts:
   - {fileID: 159303993}
@@ -1060,6 +1060,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2259361165287372892, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.53
+      objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840839, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Name
       value: playerTest

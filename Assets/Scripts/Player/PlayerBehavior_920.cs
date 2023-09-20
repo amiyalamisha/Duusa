@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerBehavior : MonoBehaviour
+public class PlayerBehavior_920 : MonoBehaviour
 {
     public Camera cam;
     public LineRenderer movementSnakes;
