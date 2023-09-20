@@ -23,7 +23,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private Rigidbody2D rb;         
     private List<Vector2> points = new List<Vector2>();     // all working movement snakes
-    private List<Vector2> edges = new List<Vector2>();
+    public List<Vector2> edges = new List<Vector2>();
 
     // Start is called before the first frame update
     void Start()
