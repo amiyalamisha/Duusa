@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
     public Camera cam;
     public LineRenderer movementSnakes;
     public LineRenderer grabbingSnakes;
-    EdgeCollider2D edgeCollider;
+    public EdgeCollider2D edgeCollider;
     public Animator playerAnim;
 
     public LayerMask grappleMask;       // layer for all grapplable surfaces

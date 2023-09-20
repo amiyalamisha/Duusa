@@ -215,4 +215,11 @@ public class Enemy_913 : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "grabSnake")
+        {
+            Debug.Log("grab enemy");
+        }
+    }
 }
