@@ -12,6 +12,9 @@ public class Enemy_920 : MonoBehaviour
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
 
+    private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
+
+
 
     //---- ENEMY PROPERTIES
 
@@ -25,7 +28,8 @@ public class Enemy_920 : MonoBehaviour
         Idle,               // doing jack-shit lol
         Patrol,             // walking around, peacefully
         Chase,              // chasing after medusa
-        Shoot               // planted, trying to shoot medusa
+        Shoot,              // planted, trying to shoot medusa,
+        Petrify             // enemy is turned to stone - do not move
     }
     public AIState curState;                // current state of the enemy
 
@@ -37,6 +41,13 @@ public class Enemy_920 : MonoBehaviour
 
     private LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
     private SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
+
+    [HideInInspector]
+    public bool isFrozen = false;           // allows other scripts to check if the enemy is frozen
+
+    // NOTE: Change these to sprites instead of colors
+    public Color normalColor;               // normal color of the sprite
+    public Color petrifyColor;              // color of the sprite after being petrified 
 
 
     //=================    GENERAL UNITY FUNCTIONS   ===================//
@@ -63,6 +74,16 @@ public class Enemy_920 : MonoBehaviour
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
+        sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
+
+
+
+
+        // set starting color to unpetrified
+        if(curState != AIState.Petrify)
+            sprRend.color = normalColor;
+        else
+            sprRend.color = petrifyColor;
     
     }
 
@@ -118,7 +139,7 @@ public class Enemy_920 : MonoBehaviour
                 // if not in range of Medusa, switch to chasing her
                 if(shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
                     if(projAtt != null && projAtt.canFire){
-                        Debug.Log("fire!");
+                        // Debug.Log("fire!");
                         projAtt.FireBullet(shootRange.target);
                     }
                 }
@@ -131,6 +152,19 @@ public class Enemy_920 : MonoBehaviour
                 else if(!InRangeX(transform, shootRange.target, 3.0f)){
                     curState = AIState.Chase;
                 }
+                break;
+
+
+            case AIState.Petrify:
+                // make the enemy completely still - no chance of being freed
+
+                // freeze and change colors to petrification if not already
+                // redundant, but just in case Petrify() failed, or the curState was changed elsewhere
+                if(!isFrozen){
+                    sprRend.color = petrifyColor;
+                    isFrozen = true;
+                }
+
                 break;
         }
 
@@ -192,6 +226,13 @@ public class Enemy_920 : MonoBehaviour
         patrolInd+=1;
         patrolInd %= patrolPts.Count;
         curState = AIState.Patrol;
+    }
+
+    // turns the enemy into stone
+    public void Petrify(){
+        isFrozen = true;
+        sprRend.color = petrifyColor;
+        curState = AIState.Petrify;
     }
 
     //=================    CONTROL FUNCTIONS   ===================//

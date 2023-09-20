@@ -11,6 +11,14 @@ public class PlayerBehavior_920 : MonoBehaviour
     EdgeCollider2D edgeCollider;
     public Animator playerAnim;
 
+    // petrification properties
+    private SpriteRenderer petrifyRaySpr;
+    private DetectionRange_GEN petrifyRayDetect;
+    private bool petrifyRayOn = false;
+    public float petrifyRayOnTime = 0.3f;
+    public float petrifyRayCooldown = 2.0f;
+    private bool canPetrify = true;
+
     public LayerMask grappleMask;       // layer for all grapplable surfaces
     [SerializeField] private float grav;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
@@ -35,6 +43,14 @@ public class PlayerBehavior_920 : MonoBehaviour
         movementSnakes.positionCount = 0;
         movementSnakes.enabled = false;
         grabbingSnakes.enabled = false;
+
+        // search for the petrification ray child object if available
+        Transform petRay = transform.Find("PetrifyRay");
+        if(petRay != null){
+            petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
+            petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
+            petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +105,16 @@ public class PlayerBehavior_920 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Detatch();
+        }
+
+
+
+
+        // if the petrify ray is on and an enemy is in range, petrify it
+        if(petrifyRayOn){
+            if(EnemyNotPetrified()){
+                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrify();
+            }
         }
     }
 
@@ -187,10 +213,35 @@ public class PlayerBehavior_920 : MonoBehaviour
         edgeCollider.SetPoints(edges);
     }
 
+    // check if the enemy target in the petrify range is already petrified or not
+    bool EnemyNotPetrified(){
+        return petrifyRayDetect.targetInSight 
+        && petrifyRayDetect.target.tag == "enemy" 
+        && !petrifyRayDetect.target.GetComponent<Enemy_920>().isFrozen;
+    }
+
     // turning enemies to stone
     void Petrify()
     {
+        if(canPetrify)
+            StartCoroutine(FlashPetrifyRay());
+    }
 
+    IEnumerator FlashPetrifyRay(){
+        // ray on + detection
+        petrifyRayOn = true;
+        petrifyRaySpr.enabled = true;
+        canPetrify = false;
+        
+        yield return new WaitForSeconds(0.3f);
+
+        // ray off
+        petrifyRayOn = false;
+        petrifyRaySpr.enabled = false;
+
+        // ray cooldown
+        yield return new WaitForSeconds(petrifyRayCooldown);
+        canPetrify = true;
     }
 
     // i dont remember what this does YET
