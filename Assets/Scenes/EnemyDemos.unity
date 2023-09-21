@@ -2122,8 +2122,8 @@ MonoBehaviour:
   movementSnakes: {fileID: 2259361165708542986}
   grabbingSnakes: {fileID: 2044605400}
   playerAnim: {fileID: 0}
-  maxHealth: 5
-  curHealth: 5
+  maxHealth: 3
+  curHealth: 3
   healthGraceAmt: 1
   canHurt: 1
   hurtColor: {r: 0.24793155, g: 0.07111071, b: 0.3207547, a: 1}
