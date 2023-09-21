@@ -155,9 +155,10 @@ public class Enemy_913 : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("let go");
                     if (!chasingAgain)
-                    {
-                        TranstitionState(AIState.Chase, 2);
+                    { 
+                        StartCoroutine(TranstitionState(AIState.Chase, 2f)) ;
                         chasingAgain = true;
                     }
                 }
