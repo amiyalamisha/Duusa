@@ -5,20 +5,33 @@ using UnityEngine;
 
 public class PlayerBehavior_920 : MonoBehaviour
 {
+    [Header("General Properties")]
     public Camera cam;
     public LineRenderer movementSnakes;
     public LineRenderer grabbingSnakes;
     EdgeCollider2D edgeCollider;
     public Animator playerAnim;
 
-    // petrification properties
-    private SpriteRenderer petrifyRaySpr;
-    private DetectionRange_GEN petrifyRayDetect;
-    private bool petrifyRayOn = false;
-    public float petrifyRayOnTime = 0.3f;
-    public float petrifyRayCooldown = 2.0f;
-    private bool canPetrify = true;
+    [Header("Health Properties")]
+    private SpriteRenderer sprRend;         // sprite renderer of the player
+    public int maxHealth = 3;               // maximum possible health of the player
+    public int curHealth = 3;               // current health of the player
+    public float healthGraceAmt = 0.6f;     // invulnerability time before can take damage again
+    public bool canHurt = true;             // flag for whether the player is vulnerable to attacks
+    private Color origColor;                // stores the original color to revert back to
+    public Color hurtColor;                 // color for when player is hurt and grace period is activated
+    public HealthUI healthGUI;              // GUI for the health 
 
+    // petrification properties
+    [Header("Petrification Properties")]
+    private SpriteRenderer petrifyRaySpr;           // sprite render for the petrification ray (toggles on and off)
+    private DetectionRange_GEN petrifyRayDetect;    // detection script for whether an enemy is in the petrification area
+    private bool petrifyRayOn = false;              // boolean for if the ray is activated  
+    public float petrifyRayOnTime = 0.3f;           // how long the ray stays activated for
+    public float petrifyRayCooldown = 2.0f;         // how long before the ray can be used again
+    private bool canPetrify = true;                 // flag for whether or not the petrification ray can be used
+
+    [Header("Snake Grapple Properties")]
     public LayerMask grappleMask;       // layer for all grapplable surfaces
     [SerializeField] private float grav;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
@@ -36,6 +49,8 @@ public class PlayerBehavior_920 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sprRend = GetComponent<SpriteRenderer>();
+        origColor = sprRend.color;
         rb = GetComponent<Rigidbody2D>();
         edgeCollider = grabbingSnakes.GetComponent<EdgeCollider2D>();
         grav = rb.gravityScale;
@@ -50,6 +65,14 @@ public class PlayerBehavior_920 : MonoBehaviour
             petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
             petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
             petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
+        }
+
+        // start with max health
+        curHealth = maxHealth;
+
+        // if the health GUI is added, set the max and current amounts
+        if(healthGUI != null){
+            healthGUI.SetHealth(maxHealth, curHealth);
         }
     }
 
@@ -227,13 +250,14 @@ public class PlayerBehavior_920 : MonoBehaviour
             StartCoroutine(FlashPetrifyRay());
     }
 
+    // timer for showing and activating the petrification ray
     IEnumerator FlashPetrifyRay(){
         // ray on + detection
         petrifyRayOn = true;
         petrifyRaySpr.enabled = true;
         canPetrify = false;
         
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(petrifyRayOnTime);
 
         // ray off
         petrifyRayOn = false;
@@ -257,4 +281,44 @@ public class PlayerBehavior_920 : MonoBehaviour
         center /= points.Length;
         return center;
     }
+
+    // called when medusa is hit by a projectile
+    public void Hurt(int dmgAmt){
+        // still in grace period, so ignore
+        if(!canHurt)
+            return;
+
+        // otherwise lose health and start grace invulnerability
+        curHealth -= dmgAmt;
+
+        // update GUI
+        if(healthGUI !=null)
+            healthGUI.UpdateHealth(curHealth);
+
+        // lost all health
+        if(curHealth <= 0)
+            OnDeath();
+        // still some health left
+        else
+            StartCoroutine(HurtGrace());
+    }
+
+    // activates the grace period for the player to be invulnerable immediately after being hit
+    IEnumerator HurtGrace(){
+        // grace on
+        canHurt = false;
+        sprRend.color = hurtColor;
+
+        yield return new WaitForSeconds(healthGraceAmt);  
+
+        // grace off
+        sprRend.color = origColor;
+        canHurt = true;
+    }
+
+    // action to do when the player reaches 0 health
+    void OnDeath(){
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
 }

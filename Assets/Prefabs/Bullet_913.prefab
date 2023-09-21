@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 482944713237719108}
   - component: {fileID: 598848990122825160}
   - component: {fileID: 5361925306591825513}
+  - component: {fileID: 711064320827971599}
   m_Layer: 0
   m_Name: Bullet_913
   m_TagString: bullet
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &482944713237719108
 SpriteRenderer:
@@ -123,3 +124,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &711064320827971599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143222247527511909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30471eb215faf420b9e58f50136e2e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 1

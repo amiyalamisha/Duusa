@@ -36,7 +36,8 @@ public class EnemyProjectileAttack : MonoBehaviour
     // death countdown for the bullet after being fired
     IEnumerator BulletDeath(GameObject b){
         yield return new WaitForSeconds(bulletTimeout);
-        Destroy(b);
+        if(b != null)  // if the bullet wasn't already destroyed, then destroy it
+            Destroy(b);
     }
 
     // reload time to allow firing of another bullet
