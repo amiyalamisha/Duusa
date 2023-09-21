@@ -11,6 +11,8 @@ public class Enemy_913 : MonoBehaviour
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
+    private PlayerBehavior playerBehavior;
+    private Rigidbody2D rb;
 
 
     //---- ENEMY PROPERTIES
@@ -18,6 +20,7 @@ public class Enemy_913 : MonoBehaviour
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
+    private bool chasingAgain = false;
 
     // AI behavior state
     [System.Serializable]
@@ -25,7 +28,8 @@ public class Enemy_913 : MonoBehaviour
         Idle,               // doing jack-shit lol
         Patrol,             // walking around, peacefully
         Chase,              // chasing after medusa
-        Shoot               // planted, trying to shoot medusa
+        Shoot,               // planted, trying to shoot medusa
+        Grabbed
     }
     public AIState curState;                // current state of the enemy
 
@@ -44,6 +48,7 @@ public class Enemy_913 : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        rb = GetComponent<Rigidbody2D>();               // enemy rigidbody
 
         // assign the range detectors if available
         Transform pr = transform.Find("PatrolRange");
@@ -63,7 +68,7 @@ public class Enemy_913 : MonoBehaviour
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
-    
+        playerBehavior = GameObject.Find("playerTest").GetComponent<PlayerBehavior>();
     }
 
     // Update is called once per frame
@@ -75,14 +80,18 @@ public class Enemy_913 : MonoBehaviour
                 // maybe animation?
 
                 // if medusa in range, chase her
-                if(lookRange.medusaInSight)
+                chasingAgain = false;
+
+                if (lookRange.medusaInSight)
                     curState = AIState.Chase;
 
                 break;
 
 
             case AIState.Patrol:
-                if(patrolPts.Count > 0)                     // if there are patrol points, go to them
+                chasingAgain = false;
+
+                if (patrolPts.Count > 0)                     // if there are patrol points, go to them
                     GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
                 else                                        // otherwise be idle
                     curState = AIState.Idle;
@@ -95,8 +104,10 @@ public class Enemy_913 : MonoBehaviour
 
 
             case AIState.Chase:
+                chasingAgain = true;
+
                 // if not in range of Medusa, the move towards her
-                if(shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
+                if (shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
                     GoToTarget(shootRange.target, chase_speed, 3.0f, true);
                 }
                 // if lost the target, go back to patrol
@@ -115,8 +126,10 @@ public class Enemy_913 : MonoBehaviour
 
 
             case AIState.Shoot:
+                chasingAgain = false;
+
                 // if not in range of Medusa, switch to chasing her
-                if(shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
+                if (shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
                     if(projAtt != null && projAtt.canFire){
                         Debug.Log("fire!");
                         projAtt.FireBullet(shootRange.target);
@@ -131,6 +144,25 @@ public class Enemy_913 : MonoBehaviour
                 else if(!InRangeX(transform, shootRange.target, 3.0f)){
                     curState = AIState.Chase;
                 }
+                break;
+
+
+            case AIState.Grabbed:
+                if (Input.GetMouseButton(1))
+                {
+                    transform.position = new Vector3(playerBehavior.edges[0].x, playerBehavior.edges[0].y, 0);
+                    chasingAgain = false;
+                }
+                else
+                {
+                    Debug.Log("let go");
+                    if (!chasingAgain)
+                    { 
+                        StartCoroutine(TranstitionState(AIState.Chase, 2f)) ;
+                        chasingAgain = true;
+                    }
+                }
+                
                 break;
         }
 
@@ -219,7 +251,21 @@ public class Enemy_913 : MonoBehaviour
     {
         if(collision.gameObject.tag == "grabSnake")
         {
-            Debug.Log("grab enemy");
+            curState = AIState.Grabbed;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && curState == AIState.Grabbed)
+        {
+            Debug.Log("enemy died");
+            Destroy(gameObject);
+        }
+    }
+    /*
+    IEnumerator DyingDelay()
+    {
+
+    }*/
 }
