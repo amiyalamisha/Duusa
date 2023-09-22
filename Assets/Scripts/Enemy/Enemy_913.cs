@@ -179,6 +179,7 @@ public class Enemy_913 : MonoBehaviour
                 {
                     sprRend.color = petrifyColor;
                     isFrozen = true;
+                    allowGrab = false;
                 }
 
                 break;
@@ -292,7 +293,7 @@ public class Enemy_913 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "grabSnake")
+        if(collision.gameObject.tag == "grabSnake" && !isFrozen)
         {
             allowGrab = true;
             curState = AIState.Grabbed;

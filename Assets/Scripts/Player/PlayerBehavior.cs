@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -25,11 +26,14 @@ public class PlayerBehavior : MonoBehaviour
     // petrification properties
     [Header("Petrification Properties")]
     private SpriteRenderer petrifyRaySpr;           // sprite render for the petrification ray (toggles on and off)
+    private Transform petrifyRayTrans;              // reference to transform for the petrification ray (to flip when not facing right)
     private DetectionRange_GEN petrifyRayDetect;    // detection script for whether an enemy is in the petrification area
     private bool petrifyRayOn = false;              // boolean for if the ray is activated  
     public float petrifyRayOnTime = 0.3f;           // how long the ray stays activated for
     public float petrifyRayCooldown = 2.0f;         // how long before the ray can be used again
+    public float reposRay = 0f; 
     private bool canPetrify = true;                 // flag for whether or not the petrification ray can be used
+    private bool facingRight = false;               // checking for which direction player is facing
 
     [Header("Snake Grapple Properties")]
     public LayerMask grappleMask;       // layer for all grapplable surfaces
@@ -63,6 +67,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
             petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
+            petrifyRayTrans = petRay.GetComponent<Transform>();
             petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
         }
     }
@@ -126,7 +131,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (EnemyNotPetrified())
             {
-                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrify();
+                petrifyRayDetect.target.GetComponent<Enemy_913>().Petrified();
             }
         }
     }
@@ -134,9 +139,20 @@ public class PlayerBehavior : MonoBehaviour
     // moving around with snakes (for now)
     void PlayerMovement()
     {
-        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);     // target pos
+        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);                 // target pos
         Vector2 direction = (mousePos - (Vector2)transform.position).normalized;        // where the player should be moving
-
+        
+        // for which direction the player is currently facing (used for petrifry)
+        if(direction.x < 0)
+        {
+            facingRight = false;
+        }
+        else
+        {
+            facingRight = true;
+        }
+        
+        Debug.Log(facingRight);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, moveSnakeLength, grappleMask);
         // trying to randomize in the general range of where the first hit point is aiming
 
@@ -167,6 +183,10 @@ public class PlayerBehavior : MonoBehaviour
                 velocity += Time.deltaTime * moveSpeed;
                 rb.MovePosition(Vector2.MoveTowards(transform.position, mousePos, velocity));
                 //rb.position = Vector2.Add(transform.position, points[0]);
+
+                //Transform targetX;
+                //targetX.position = mousePos;
+
 
                 movementSnakes.positionCount = 0;
                 movementSnakes.positionCount = points.Count * 2;
@@ -235,10 +255,40 @@ public class PlayerBehavior : MonoBehaviour
     // timer for showing and activating the petrification ray
     IEnumerator FlashPetrifyRay()
     {
+        Vector2 rayPos = petrifyRayTrans.position;
+
         // ray on + detection
         petrifyRayOn = true;
         petrifyRaySpr.enabled = true;
         canPetrify = false;
+        /*
+        if (!facingRight)
+        {
+            if (petrifyRaySpr.flipY)
+            {
+                petrifyRayTrans.position = new Vector2(rayPos.x, rayPos.y);
+            }
+            else
+            {
+                petrifyRaySpr.flipY = true;
+                //rayPos *= -1;
+                petrifyRayTrans.position = new Vector2(-rayPos.x+reposRay, rayPos.y);
+                Debug.Log("faceright shot");
+            }
+        }
+                
+        else
+        {
+            if (petrifyRaySpr.flipY)
+            {
+                petrifyRaySpr.flipY = false;
+                petrifyRayTrans.position = new Vector2(-rayPos.x+ reposRay, rayPos.y);
+            }
+            else
+            {
+                petrifyRayTrans.position = new Vector2(rayPos.x, rayPos.y);
+            }
+        }*/
 
         yield return new WaitForSeconds(petrifyRayOnTime);
 
