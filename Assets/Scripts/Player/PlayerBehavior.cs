@@ -5,12 +5,33 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    [Header("General Properties")]
     public Camera cam;
     public LineRenderer movementSnakes;
     public LineRenderer grabbingSnakes;
-    public EdgeCollider2D edgeCollider;
+    EdgeCollider2D edgeCollider;
     public Animator playerAnim;
 
+    [Header("Health Properties")]
+    private SpriteRenderer sprRend;         // sprite renderer of the player
+    public int maxHealth = 3;               // maximum possible health of the player
+    public int curHealth = 3;               // current health of the player
+    public float healthGraceAmt = 0.6f;     // invulnerability time before can take damage again
+    public bool canHurt = true;             // flag for whether the player is vulnerable to attacks
+    private Color origColor;                // stores the original color to revert back to
+    public Color hurtColor;                 // color for when player is hurt and grace period is activated
+    public HealthUI healthGUI;              // GUI for the health 
+
+    // petrification properties
+    [Header("Petrification Properties")]
+    private SpriteRenderer petrifyRaySpr;           // sprite render for the petrification ray (toggles on and off)
+    private DetectionRange_GEN petrifyRayDetect;    // detection script for whether an enemy is in the petrification area
+    private bool petrifyRayOn = false;              // boolean for if the ray is activated  
+    public float petrifyRayOnTime = 0.3f;           // how long the ray stays activated for
+    public float petrifyRayCooldown = 2.0f;         // how long before the ray can be used again
+    private bool canPetrify = true;                 // flag for whether or not the petrification ray can be used
+
+    [Header("Snake Grapple Properties")]
     public LayerMask grappleMask;       // layer for all grapplable surfaces
     [SerializeField] private float grav;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
@@ -21,7 +42,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public int maxPoints = 3;       // how many movement snakes can you shoot max
 
-    private Rigidbody2D rb;         
+    private Rigidbody2D rb;
     private List<Vector2> points = new List<Vector2>();     // all working movement snakes
     public List<Vector2> edges = new List<Vector2>();
 
@@ -35,6 +56,15 @@ public class PlayerBehavior : MonoBehaviour
         movementSnakes.positionCount = 0;
         movementSnakes.enabled = false;
         grabbingSnakes.enabled = false;
+
+        // search for the petrification ray child object if available
+        Transform petRay = transform.Find("PetrifyRay");
+        if (petRay != null)
+        {
+            petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
+            petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
+            petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +119,15 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Detatch();
+        }
+
+        // if the petrify ray is on and an enemy is in range, petrify it
+        if (petrifyRayOn)
+        {
+            if (EnemyNotPetrified())
+            {
+                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrify();
+            }
         }
     }
 
@@ -174,23 +213,42 @@ public class PlayerBehavior : MonoBehaviour
 
     void GrabbingSnakeCollisions(LineRenderer snake)
     {
-        /*List<Vector2> edges = new List<Vector2>();
-
-        // hard coding only one snake for now
-        Vector2 snakePoint = snake.GetPosition(1);      // for the end point position of the line
-        edges.Add(new Vector2(snakePoint.x, snakePoint.y));
-
-        edgeCollider.SetPoints(edges);*/
-
         Vector2 snakePoint = snake.GetPosition(1);
         edges[0] = new Vector2(snakePoint.x, snakePoint.y);
         edgeCollider.SetPoints(edges);
     }
 
+    bool EnemyNotPetrified()
+    {
+        return petrifyRayDetect.targetInSight
+        && petrifyRayDetect.target.tag == "enemy"
+        && !petrifyRayDetect.target.GetComponent<Enemy_920>().isFrozen;
+    }
+
     // turning enemies to stone
     void Petrify()
     {
+        if (canPetrify)
+            StartCoroutine(FlashPetrifyRay());
+    }
 
+    // timer for showing and activating the petrification ray
+    IEnumerator FlashPetrifyRay()
+    {
+        // ray on + detection
+        petrifyRayOn = true;
+        petrifyRaySpr.enabled = true;
+        canPetrify = false;
+
+        yield return new WaitForSeconds(petrifyRayOnTime);
+
+        // ray off
+        petrifyRayOn = false;
+        petrifyRaySpr.enabled = false;
+
+        // ray cooldown
+        yield return new WaitForSeconds(petrifyRayCooldown);
+        canPetrify = true;
     }
 
     // i dont remember what this does YET
