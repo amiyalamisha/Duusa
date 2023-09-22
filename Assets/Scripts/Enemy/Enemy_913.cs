@@ -20,7 +20,7 @@ public class Enemy_913 : MonoBehaviour
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
-    private bool chasingAgain = false;
+    private bool allowGrab = false;
 
     // AI behavior state
     [System.Serializable]
@@ -80,16 +80,19 @@ public class Enemy_913 : MonoBehaviour
                 // maybe animation?
 
                 // if medusa in range, chase her
-                chasingAgain = false;
+                allowGrab = false;
 
                 if (lookRange.medusaInSight)
                     curState = AIState.Chase;
+                else if (Input.GetMouseButton(1) && allowGrab){
+                    curState = AIState.Grabbed;
+                }
 
                 break;
 
 
             case AIState.Patrol:
-                chasingAgain = false;
+                allowGrab = false;
 
                 if (patrolPts.Count > 0)                     // if there are patrol points, go to them
                     GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
@@ -99,13 +102,14 @@ public class Enemy_913 : MonoBehaviour
                 // if medusa in range, chase her
                 if(lookRange.medusaInSight)
                     curState = AIState.Chase;
+                else if (Input.GetMouseButton(1) && allowGrab){
+                    curState = AIState.Grabbed;
+                }
                 break;
 
 
 
             case AIState.Chase:
-                chasingAgain = true;
-
                 // if not in range of Medusa, the move towards her
                 if (shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
                     GoToTarget(shootRange.target, chase_speed, 3.0f, true);
@@ -119,6 +123,9 @@ public class Enemy_913 : MonoBehaviour
                 else if(InRangeX(transform, shootRange.target, 3.0f)){
                     curState = AIState.Shoot;
                 }
+                else if (Input.GetMouseButton(1) && allowGrab){
+                    curState = AIState.Grabbed;
+                }
 
                 break;
 
@@ -126,8 +133,6 @@ public class Enemy_913 : MonoBehaviour
 
 
             case AIState.Shoot:
-                chasingAgain = false;
-
                 // if not in range of Medusa, switch to chasing her
                 if (shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
                     if(projAtt != null && projAtt.canFire){
@@ -144,23 +149,24 @@ public class Enemy_913 : MonoBehaviour
                 else if(!InRangeX(transform, shootRange.target, 3.0f)){
                     curState = AIState.Chase;
                 }
+                else if (Input.GetMouseButton(1) && allowGrab){
+                    curState = AIState.Grabbed;
+                }
                 break;
 
 
             case AIState.Grabbed:
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButton(1) && allowGrab)
                 {
-                    transform.position = new Vector3(playerBehavior.edges[0].x, playerBehavior.edges[0].y, 0);
-                    chasingAgain = false;
+                    this.gameObject.transform.position = new Vector3(playerBehavior.edges[0].x, playerBehavior.edges[0].y, 0);
                 }
-                else
+                else if (!allowGrab)
                 {
                     Debug.Log("let go");
-                    if (!chasingAgain)
-                    { 
-                        StartCoroutine(TranstitionState(AIState.Chase, 2f)) ;
-                        chasingAgain = true;
-                    }
+
+                    StartCoroutine(TranstitionState(AIState.Chase, 2f)) ;
+                    allowGrab = true;
+                    
                 }
                 
                 break;
@@ -251,7 +257,17 @@ public class Enemy_913 : MonoBehaviour
     {
         if(collision.gameObject.tag == "grabSnake")
         {
+            allowGrab = true;
             curState = AIState.Grabbed;
+            Debug.Log(gameObject.name);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "grabSnake")
+        {
+            allowGrab = false;
         }
     }
 
