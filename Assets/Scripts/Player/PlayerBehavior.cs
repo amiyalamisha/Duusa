@@ -53,7 +53,9 @@ public class PlayerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sprRend = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        origColor = sprRend.color;
         edgeCollider = grabbingSnakes.GetComponent<EdgeCollider2D>();
         grav = rb.gravityScale;
 
@@ -69,6 +71,15 @@ public class PlayerBehavior : MonoBehaviour
             petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
             petrifyRayTrans = petRay.GetComponent<Transform>();
             petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
+        }
+
+        // start with max health
+        curHealth = maxHealth;
+
+        // if the health GUI is added, set the max and current amounts
+        if (healthGUI != null)
+        {
+            healthGUI.SetHealth(maxHealth, curHealth);
         }
     }
 
@@ -313,5 +324,46 @@ public class PlayerBehavior : MonoBehaviour
 
         center /= points.Length;
         return center;
+    }
+
+    public void Hurt(int dmgAmt)
+    {
+        // still in grace period, so ignore
+        if (!canHurt)
+            return;
+
+        // otherwise lose health and start grace invulnerability
+        curHealth -= dmgAmt;
+
+        // update GUI
+        if (healthGUI != null)
+            healthGUI.UpdateHealth(curHealth);
+
+        // lost all health
+        if (curHealth <= 0)
+            OnDeath();
+        // still some health left
+        else
+            StartCoroutine(HurtGrace());
+    }
+
+    // activates the grace period for the player to be invulnerable immediately after being hit
+    IEnumerator HurtGrace()
+    {
+        // grace on
+        canHurt = false;
+        sprRend.color = hurtColor;
+
+        yield return new WaitForSeconds(healthGraceAmt);
+
+        // grace off
+        sprRend.color = origColor;
+        canHurt = true;
+    }
+
+    // action to do when the player reaches 0 health
+    void OnDeath()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 }

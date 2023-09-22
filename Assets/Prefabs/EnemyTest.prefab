@@ -219,7 +219,7 @@ Transform:
   - {fileID: 4921096247679845639}
   - {fileID: 4921096247735273218}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4921096246970055323
 SpriteRenderer:
@@ -340,6 +340,9 @@ MonoBehaviour:
   - {fileID: 0}
   waitPatrolTime: 2
   patrolMinDist: 0.5
+  isFrozen: 0
+  normalColor: {r: 1, g: 0.058823533, b: 0.058823533, a: 1}
+  petrifyColor: {r: 0.5764706, g: 0.54509807, b: 0.54509807, a: 1}
 --- !u!1 &4921096247679845632
 GameObject:
   m_ObjectHideFlags: 0
