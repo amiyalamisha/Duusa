@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MoveProto_1025 : MonoBehaviour
@@ -10,6 +12,11 @@ public class MoveProto_1025 : MonoBehaviour
     private SpringJoint2D spring;                                   // spring joint 2d for moving to the target position
     private Vector2 targPt;                                         // target position the player will move to
 
+    [Header("Controls")]
+    [SerializeField] private KeyCode snakeToggleBtn = KeyCode.LeftShift;       // toggle using snakes
+    [SerializeField] private KeyCode jumpBtn = KeyCode.W;                      // jump button
+    
+
     [Header("Platform Settings")]
     [SerializeField] private readonly float groundSpeed = 3.0f;     // speed at which medusa moves while on the ground
     [SerializeField] private readonly float jumpForce = 3.0f;       // force to apply for jumping
@@ -19,8 +26,12 @@ public class MoveProto_1025 : MonoBehaviour
     public bool togSnakes = true;                                   // toggle the snakes mid-air movement
     [SerializeField] private float maxSnakeRange = 10.0f;           // the maximum distance allowed from the player for the snakes to grapple from (should be larger than target range)
     [SerializeField] private float maxTargetRange = 5.0f;           // the maximum distance allowed from the player for the target position
+    public Transform mainSnakePos;
     [SerializeField] private List<LineRenderer> snakeLines;         // snakes to spring from medusa (aesthetic purposes only)
-    public bool canExtend = false;
+    public bool canExtend = false;                                  // able to project snakes
+    [Range(0,90)]
+    [SerializeField] private float snakeSpread = 30.0f;             // angle difference
+    private Vector2[] snakeAnchors;
 
 
     [Header("Target Settings")]
@@ -30,6 +41,8 @@ public class MoveProto_1025 : MonoBehaviour
     [SerializeField] private LineRenderer targetLine;               // line to show where the player is able to move to
     [SerializeField] private Color validColor;                      // color to indicate that it is valid to move to a position         (green?)
     [SerializeField] private Color invalidColor;                    // color to indicate that it is not valid to move to a position  (red?)
+    private RaycastHit2D contactPt;
+    private Vector2 permaContactPt;
 
     [Header("Sprite Settings")]
     public Color snakeMedusa;
@@ -58,6 +71,8 @@ public class MoveProto_1025 : MonoBehaviour
             rb.gravityScale = 1;
             spring.enabled = false;
         }
+
+        snakeAnchors = new Vector2[snakeLines.Count];
     }
 
 
@@ -70,12 +85,13 @@ public class MoveProto_1025 : MonoBehaviour
             Vector2 maxPt = playerPos + Vector2.ClampMagnitude(mousePos - playerPos,maxTargetRange);             // limit the target to the range
 
             // check if the target is a valid place to move to and within snake range
-            RaycastHit2D validPos = CanExtendSnake(maxPt);
+            contactPt = CanExtendSnake(maxPt);
 
             // set the target position to move to if valid and extend snakes to nearby contact point
             if(Input.GetMouseButton(0) && togSnakes && canExtend){
                 targPt = maxPt;
-                AddSnakes(validPos.point);
+                permaContactPt = new Vector2(contactPt.point.x,contactPt.point.y);
+                SetSnakes(permaContactPt);
             }
 
             // show the crosshair and the line renderer
@@ -89,10 +105,14 @@ public class MoveProto_1025 : MonoBehaviour
                 targetSpr.transform.position = maxPt;       // set the crosshair position to the target (maxed by range distance)
                 targetLine.SetPositions(MakeLinePoints(new Vector2[]{playerPos,maxPt}));
             }
+
+            if(canExtend){
+                ShowSnakes();
+            }
         }
 
         // toggle whether medusa is using her grapple snakes or not
-        if(Input.GetMouseButtonDown(1)){
+        if(Input.GetKeyDown(snakeToggleBtn)){
             // set the values to alternates
             togSnakes = !togSnakes;
             spring.enabled = togSnakes;
@@ -130,7 +150,7 @@ public class MoveProto_1025 : MonoBehaviour
         transform.Translate(hor * Vector2.right);
 
         // allow jumps
-        if(Input.GetKeyDown(KeyCode.W)){
+        if(Input.GetKeyDown(jumpBtn)){
             rb.AddForce(Vector3.up*jumpForce*rb.mass*100);
         }
     }
@@ -157,9 +177,45 @@ public class MoveProto_1025 : MonoBehaviour
         return contact;
     }
 
-    // makes snake line renderers (like grappling hooks) for aesthetic purposes only
-    private void AddSnakes(Vector2 contactPt){
 
+    // makes snake line renderers (like grappling hooks) for aesthetic purposes only
+    private void SetSnakes(Vector2 contactPt){
+        Vector2 startPos = mainSnakePos.localPosition;
+        Vector2 ctPt2 = mainSnakePos.InverseTransformPoint(contactPt);
+        Vector2 dirVec = (ctPt2 - startPos).normalized;
+
+        // straight to the contact point
+        // snakeLines[0].SetPosition(0, startPos);
+        // snakeLines[0].SetPosition(1, ctPt2);
+
+        // extends the rest of the snakes in random directions
+        int modAngle = (int)Math.Floor(snakeSpread*2 / (snakeLines.Count-1));
+
+        for(int i=0;i<snakeLines.Count;i++){
+            // change the direction of the angle
+            float newAng = -snakeSpread + (i)*modAngle;
+            Quaternion rot = Quaternion.Euler(0,0,newAng);
+            Vector2 altVec = rot * dirVec;
+
+            // extend to new contact point (if able to attach)
+            RaycastHit2D newHit = Physics2D.Raycast(transform.position,altVec,maxSnakeRange,grappleMask);
+            if(newHit){
+                snakeLines[i].SetPosition(0, startPos);
+                snakeLines[i].SetPosition(0, mainSnakePos.InverseTransformPoint(newHit.point));
+                snakeAnchors[i] = newHit.point;
+            }
+
+        }
+
+    }
+
+    // shows the snakes in the position
+    private void ShowSnakes(){
+        Vector2 startPos = mainSnakePos.localPosition;
+        for(int i=0;i<snakeLines.Count;i++){
+            snakeLines[i].SetPosition(0, startPos);
+            snakeLines[i].SetPosition(0, mainSnakePos.InverseTransformPoint((snakeAnchors[i])));
+        }
     }
 
 
@@ -169,6 +225,18 @@ public class MoveProto_1025 : MonoBehaviour
     }
     private bool InRange2D(Vector2 a, Vector2 b, float d=0.2f){
         return Vector2.Distance(a,b) < d;
+    }
+
+    void OnDrawGizmos(){
+        // draw the contact point
+        if(canExtend){
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(contactPt.point,0.2f);
+        }
+
+        // draw the range of the snakes
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, maxSnakeRange);
     }
 }
 
