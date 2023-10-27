@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class MoveProto_1025 : MonoBehaviour
@@ -123,6 +122,9 @@ public class MoveProto_1025 : MonoBehaviour
             // reset values
             targPt = transform.position;
             rb.gravityScale = togSnakes ? 0 : 1;
+
+            if(!togSnakes)
+                HideSnakes();
         }
 
         // move to a point with snakes or do the platforming
@@ -215,6 +217,13 @@ public class MoveProto_1025 : MonoBehaviour
         for(int i=0;i<snakeLines.Count;i++){
             snakeLines[i].SetPosition(0, startPos);
             snakeLines[i].SetPosition(0, mainSnakePos.InverseTransformPoint((snakeAnchors[i])));
+        }
+    }
+
+    private void HideSnakes(){
+        for(int i=0;i<snakeLines.Count;i++){
+            snakeLines[i].SetPosition(0, Vector2.zero);
+            snakeLines[i].SetPosition(0, Vector2.zero);
         }
     }
 
