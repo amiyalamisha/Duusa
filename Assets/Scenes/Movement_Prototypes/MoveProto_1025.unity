@@ -931,7 +931,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 1
-    numCapVertices: 5
+    numCapVertices: 10
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
@@ -1740,11 +1740,13 @@ MonoBehaviour:
   togSnakes: 1
   maxSnakeRange: 10
   maxTargetRange: 5
+  mainSnakePos: {fileID: 1363236656}
   snakeLines:
   - {fileID: 1431312251}
   - {fileID: 721523832}
   - {fileID: 1591673823}
   canExtend: 0
+  snakeSpread: 30
   showCrosshair: 1
   targetSpr: {fileID: 1640702647}
   targetLine: {fileID: 2110833200}
