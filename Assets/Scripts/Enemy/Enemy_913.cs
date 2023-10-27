@@ -74,7 +74,7 @@ public class Enemy_913 : MonoBehaviour
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
-        playerBehavior = GameObject.Find("playerTest").GetComponent<PlayerBehavior>();        // finding player script
+        // playerBehavior = GameObject.Find("playerTest").GetComponent<PlayerBehavior>();        // finding player script
 
         sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
 
