@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_920 : MonoBehaviour
+public class Enemy_920 : Enemy_Abstract
 {
     
     //---- HIDDEN VARIABLES 
@@ -21,6 +21,7 @@ public class Enemy_920 : MonoBehaviour
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
+    public bool willShootMedusa = true;         // if the enemy will shoot medusa on sight
 
     // AI behavior state
     [System.Serializable]
@@ -42,8 +43,6 @@ public class Enemy_920 : MonoBehaviour
     private LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
     private SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
 
-    [HideInInspector]
-    public bool isFrozen = false;           // allows other scripts to check if the enemy is frozen
 
     // NOTE: Change these to sprites instead of colors
     public Color normalColor;               // normal color of the sprite
@@ -136,6 +135,9 @@ public class Enemy_920 : MonoBehaviour
 
 
             case AIState.Shoot:
+                if(!willShootMedusa)
+                    break;
+
                 // if not in range of Medusa, switch to chasing her
                 if(shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
                     if(projAtt != null && projAtt.canFire){
@@ -177,6 +179,9 @@ public class Enemy_920 : MonoBehaviour
             shootArea.enabled = curState == AIState.Chase || curState == AIState.Shoot;
         }
 
+        // override and make petrified if frozen
+        if(isFrozen)
+            curState = AIState.Petrify;
 
     }
 
@@ -229,7 +234,7 @@ public class Enemy_920 : MonoBehaviour
     }
 
     // turns the enemy into stone
-    public void Petrify(){
+    override public void Petrify(){
         isFrozen = true;
         sprRend.color = petrifyColor;
         curState = AIState.Petrify;

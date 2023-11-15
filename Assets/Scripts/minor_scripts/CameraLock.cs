@@ -48,7 +48,7 @@ public class CameraLock : MonoBehaviour
         Vector3 boundPos = new Vector3(
             Mathf.Clamp(targPos.x, minBounds.x, maxBounds.x),
             Mathf.Clamp(targPos.y, minBounds.y, maxBounds.y),
-            -10.0f
+            offset.z
         );
 
         Vector3 smoothPos = Vector3.Lerp(transform.position, targPos, smoothing*Time.deltaTime);

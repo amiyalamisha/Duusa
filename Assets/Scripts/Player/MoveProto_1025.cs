@@ -6,6 +6,7 @@ using UnityEngine;
 public class MoveProto_1025 : MonoBehaviour
 {
     // Components
+    private PlayerBehavior_Abstract playerBehavior;
     private Rigidbody2D rb;                                         // rigidbody physics collider   
     private SpriteRenderer sprRend;                                 // sprite renderer
     private SpringJoint2D spring;                                   // spring joint 2d for moving to the target position
@@ -55,6 +56,7 @@ public class MoveProto_1025 : MonoBehaviour
     // setup
     void Start(){
         rb = transform.GetComponent<Rigidbody2D>();
+        playerBehavior = transform.GetComponent<PlayerBehavior_Abstract>();
         sprRend = transform.GetComponent<SpriteRenderer>();
         spring = transform.GetComponent<SpringJoint2D>();
 
@@ -143,6 +145,11 @@ public class MoveProto_1025 : MonoBehaviour
         spring.distance = targDist;
         spring.frequency = targFreq;
         spring.connectedAnchor = targPt;
+
+        // set direction
+        if(playerBehavior && Mathf.Round(rb.velocity.x) != 0){
+            playerBehavior.direction = rb.velocity.x > 0 ? "right" : "left";
+        }
     }
 
     // move with gravity on the platform (normal)
@@ -151,10 +158,16 @@ public class MoveProto_1025 : MonoBehaviour
         float hor = Input.GetAxisRaw("Horizontal") * groundSpeed * Time.deltaTime; 
         transform.Translate(hor * Vector2.right);
 
+        // set the direction
+        if(playerBehavior && hor != 0)
+            playerBehavior.direction = hor > 0 ? "right" : "left";
+
         // allow jumps
         if(Input.GetKeyDown(jumpBtn)){
             rb.AddForce(Vector3.up*jumpForce*rb.mass*100);
         }
+
+        
     }
 
     // makes 2d vector points to 3d for use with the line renderer

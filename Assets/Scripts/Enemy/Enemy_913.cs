@@ -10,7 +10,7 @@ public class Enemy_913 : MonoBehaviour
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
-    private PlayerBehavior playerBehavior;
+    private PlayerBehavior_Abstract playerBehavior;
     
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
 
@@ -74,7 +74,7 @@ public class Enemy_913 : MonoBehaviour
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
-        // playerBehavior = GameObject.Find("playerTest").GetComponent<PlayerBehavior>();        // finding player script
+        playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior_Abstract>();        // finding player script
 
         sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
 
