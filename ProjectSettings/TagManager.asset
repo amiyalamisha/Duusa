@@ -7,6 +7,8 @@ TagManager:
   - enemy
   - bullet
   - enemyBack
+  - grabSnake
+  - cameraLock
   layers:
   - Default
   - TransparentFX
@@ -41,6 +43,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Snakes
+    uniqueID: 2429605015
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1435602845
     locked: 0

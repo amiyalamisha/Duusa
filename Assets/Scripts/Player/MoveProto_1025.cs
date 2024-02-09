@@ -11,6 +11,9 @@ public class MoveProto_1025 : MonoBehaviour
     private SpriteRenderer sprRend;                                 // sprite renderer
     private SpringJoint2D spring;                                   // spring joint 2d for moving to the target position
     private Vector2 targPt;                                         // target position the player will move to
+    
+    // global script
+    private MenuControl mainMenu;                                   // menu object of the game
 
     [Header("Controls")]
     [SerializeField] private KeyCode snakeToggleBtn = KeyCode.LeftShift;       // toggle using snakes
@@ -74,6 +77,9 @@ public class MoveProto_1025 : MonoBehaviour
         }
 
         snakeAnchors = new Vector2[snakeLines.Count];
+
+
+        mainMenu = GameObject.Find("MasterControl").GetComponent<MenuControl>();
     }
 
 
@@ -96,7 +102,7 @@ public class MoveProto_1025 : MonoBehaviour
             }
 
             // show the crosshair and the line renderer
-            if(showCrosshair){
+            if(showCrosshair && (mainMenu == null || !mainMenu.gamePaused)){
                 // change color of crosshair and line based on validity
                 Color color2use = canExtend ? validColor : invalidColor;
                 targetLine.material.SetColor("_Color", color2use);
