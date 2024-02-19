@@ -187,6 +187,10 @@ PrefabInstance:
       propertyPath: curState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8923855444184504083, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
+      propertyPath: willShootMedusa
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
@@ -5062,6 +5066,10 @@ PrefabInstance:
     - target: {fileID: 4583777975310609840, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
       propertyPath: m_Name
       value: EnemyTest2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8923855444184504083, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
+      propertyPath: willShootMedusa
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8923855444184504083, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
       propertyPath: patrolPts.Array.data[0]

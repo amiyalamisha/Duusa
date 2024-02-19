@@ -500,7 +500,7 @@ MonoBehaviour:
   isFrozen: 0
   patrol_speed: 2
   chase_speed: 4
-  willShootMedusa: 0
+  willShootMedusa: 1
   curState: 1
   patrolPts:
   - {fileID: 0}
