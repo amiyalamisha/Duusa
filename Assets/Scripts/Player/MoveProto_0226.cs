@@ -55,6 +55,7 @@ public class MoveProto_0226 : MonoBehaviour
     [SerializeField] private float targDamp = 0.5f;                 // target dampening value for the spring joint
     [SerializeField] private float targDist = 0.005f;               // proximity to reach target with the minimum spring length
     [SerializeField] private float targFreq = 0.5f;                 // how many "coils" of the spring
+    [SerializeField] private float fallGrav = 0.1f;                 // how much to fall by while in mid-air
 
     // setup
     void Start(){
@@ -69,7 +70,7 @@ public class MoveProto_0226 : MonoBehaviour
 
         if(togSnakes){
             sprRend.color = snakeMedusa;
-            rb.gravityScale = 0;
+            rb.gravityScale = fallGrav;
             spring.enabled = true;
         }else{
             sprRend.color = normalMedusa;
@@ -134,10 +135,12 @@ public class MoveProto_0226 : MonoBehaviour
 
             // reset values
             targPt = transform.position;
-            rb.gravityScale = togSnakes ? 0 : 1;
+            rb.gravityScale = togSnakes ? fallGrav : 1;
 
             if(!togSnakes)
                 HideSnakes();
+            else
+                SetSnakes(new Vector2(transform.position.x, transform.position.y));
         }
 
         // move to a point with snakes or do the platforming
@@ -148,9 +151,9 @@ public class MoveProto_0226 : MonoBehaviour
         }
 
         // debug
-        if(Input.GetKeyDown(KeyCode.Z)){
-            snakeLines[0].GetComponent<SnakeRope>().HideSnakes();
-        }
+        // if(Input.GetKeyDown(KeyCode.Z)){
+        //     snakeLines[0].GetComponent<SnakeRope>().HideSnakes();
+        // }
 
     }
 
@@ -242,6 +245,8 @@ public class MoveProto_0226 : MonoBehaviour
     private void ShowSnakes(){
         // Vector2 startPos = mainSnakePos.localPosition;
         for(int i=0;i<snakeLines.Count;i++){
+            snakeLines[i].SetActive(true);
+            // SetSnakes(permaContactPt);
             snakeLines[i].GetComponent<SnakeRope>().UpdateSnakeRope();
         }
     }
@@ -249,7 +254,10 @@ public class MoveProto_0226 : MonoBehaviour
     private void HideSnakes(){
         for(int i=0;i<snakeLines.Count;i++){
             snakeLines[i].GetComponent<SnakeRope>().HideSnakes();
+            snakeLines[i].SetActive(false);
         }
+
+        // hide the objects
     }
 
 

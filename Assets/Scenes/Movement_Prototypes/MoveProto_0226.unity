@@ -3714,7 +3714,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 30
+  m_Mass: 100
   m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -3858,9 +3858,10 @@ MonoBehaviour:
   invalidColor: {r: 0.85882354, g: 0, b: 0, a: 0.13333334}
   snakeMedusa: {r: 0.1254902, g: 0.6901961, b: 0.49019608, a: 1}
   normalMedusa: {r: 0.6020826, g: 0.7735849, b: 0.7142187, a: 1}
-  targDamp: 0.5
+  targDamp: 1
   targDist: 0.005
   targFreq: 0.5
+  fallGrav: 0.5
 --- !u!1 &2060018777
 GameObject:
   m_ObjectHideFlags: 0
