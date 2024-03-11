@@ -86,8 +86,6 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        // when no keys are down and lines are not enabled
         if (!Input.anyKey && !movementSnakes.enabled)
         {
             rb.gravityScale = grav;         // enabling gravity when lines are gone
@@ -109,6 +107,7 @@ public class PlayerBehavior : MonoBehaviour
         if(Input.GetMouseButton(1))
         {
             Devour();
+            
         }
         else
         {
@@ -163,7 +162,7 @@ public class PlayerBehavior : MonoBehaviour
             facingRight = true;
         }
         
-        Debug.Log(facingRight);
+        //Debug.Log(facingRight);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, moveSnakeLength, grappleMask);
         // trying to randomize in the general range of where the first hit point is aiming
 

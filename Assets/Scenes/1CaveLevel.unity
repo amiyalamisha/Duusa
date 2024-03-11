@@ -5044,7 +5044,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837911019}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.03, y: -0.07, z: -0.021807805}
+  m_LocalPosition: {x: -4.03, y: 0.65, z: -0.021807805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5059,6 +5059,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4583777974410187283, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
+      propertyPath: canFire
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4583777975310609806, guid: b98641022a8ed4714962c415f1c8a63f, type: 3}
       propertyPath: m_Sprite
       value: 

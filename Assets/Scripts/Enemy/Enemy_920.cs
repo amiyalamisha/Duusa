@@ -11,6 +11,7 @@ public class Enemy_920 : Enemy_Abstract
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
+    private PlayerBehavior_Abstract playerBehavior;
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
 
@@ -22,6 +23,7 @@ public class Enemy_920 : Enemy_Abstract
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
     public bool willShootMedusa = true;         // if the enemy will shoot medusa on sight
+    private bool allowGrab = false;
 
     // AI behavior state
     [System.Serializable]
@@ -30,7 +32,8 @@ public class Enemy_920 : Enemy_Abstract
         Patrol,             // walking around, peacefully
         Chase,              // chasing after medusa
         Shoot,              // planted, trying to shoot medusa,
-        Petrify             // enemy is turned to stone - do not move
+        Petrify,            // enemy is turned to stone - do not move
+        Grabbed             // being grabbed by the player, stop moving
     }
     public AIState curState;                // current state of the enemy
 
@@ -72,6 +75,8 @@ public class Enemy_920 : Enemy_Abstract
         // assign the projectile attack script if available
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
+
+        playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior_Abstract>();        // finding player script
 
         sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
 
@@ -168,6 +173,23 @@ public class Enemy_920 : Enemy_Abstract
                 }
 
                 break;
+
+
+            case AIState.Grabbed:
+                if (Input.GetMouseButton(1) && allowGrab)
+                {
+                    this.gameObject.transform.position = new Vector3(playerBehavior.edges[0].x, playerBehavior.edges[0].y, 0);
+                }
+                else if (!allowGrab)
+                {
+                    Debug.Log("let go");
+
+                    StartCoroutine(TranstitionState(AIState.Chase, 2f));
+                    allowGrab = true;
+
+                }
+
+                break;
         }
 
 
@@ -260,5 +282,36 @@ public class Enemy_920 : Enemy_Abstract
             // Debug.Log("to the right");
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "grabSnake" && !isFrozen)
+        {
+            allowGrab = true;
+            curState = AIState.Grabbed;
+            Debug.Log(gameObject.name);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "grabSnake")
+        {
+            allowGrab = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && curState == AIState.Grabbed)
+        {
+            Debug.Log("enemy died");
+            Destroy(gameObject);
+        }
+    }
+    
+    //IEnumerator DyingDelay()
+    
+
 
 }
