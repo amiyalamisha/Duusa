@@ -11,7 +11,7 @@ public class Enemy_920 : Enemy_Abstract
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
-    private PlayerBehavior_Abstract playerBehavior;
+    private PlayerBehavior playerBehavior;
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
 
@@ -76,7 +76,7 @@ public class Enemy_920 : Enemy_Abstract
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
-        playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior_Abstract>();        // finding player script
+        playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>();        // finding player script
 
         sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
 
@@ -93,6 +93,7 @@ public class Enemy_920 : Enemy_Abstract
 
     // Update is called once per frame
     void Update(){
+        Debug.Log(allowGrab);
         // controls the AI behvaior (see the FSM diagram)
         switch(curState){
             case AIState.Idle:
@@ -289,16 +290,16 @@ public class Enemy_920 : Enemy_Abstract
         {
             allowGrab = true;
             curState = AIState.Grabbed;
-            Debug.Log(gameObject.name);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "grabSnake")
+        if (allowGrab)
         {
             allowGrab = false;
         }
+            
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

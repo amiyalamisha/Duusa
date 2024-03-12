@@ -4929,6 +4929,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 260760525}
+    - target: {fileID: 2259361165733840832, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: moveSnakeLength
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840834, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Size.x
       value: 0.45384407

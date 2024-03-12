@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerBehavior_920 : MonoBehaviour
+public class PlayerBehavior_920 : PlayerBehavior_Abstract
 {
     [Header("General Properties")]
     public Camera cam;
@@ -283,7 +283,7 @@ public class PlayerBehavior_920 : MonoBehaviour
     }
 
     // called when medusa is hit by a projectile
-    public void Hurt(int dmgAmt){
+    public override void Hurt(int dmgAmt){
         // still in grace period, so ignore
         if(!canHurt)
             return;

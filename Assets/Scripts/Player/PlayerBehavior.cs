@@ -180,7 +180,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (points.Count > maxPoints)
                 {
                     points.RemoveAt(0);     // deactivates?
-                    Debug.Log(points.Count);
+                    //Debug.Log(points.Count);
                 }
             }
 
