@@ -65,7 +65,7 @@ public class PlayerBehavior : MonoBehaviour
         grabbingSnakes.enabled = false;
 
         // search for the petrification ray child object if available
-        Transform petRay = transform.Find("PetrifyRay");
+        Transform petRay = transform.Find("PetrifyRayRight");   // DO LEFT
         if (petRay != null)
         {
             petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();

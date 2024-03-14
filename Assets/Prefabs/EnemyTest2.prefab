@@ -47,7 +47,7 @@ MonoBehaviour:
   bulletObj: {fileID: 143222247527511909, guid: 3a8e67808d5da486c9d5f368db6773a3, type: 3}
   bulletSpeed: 6
   bulletTimeout: 0.5
-  canFire: 0
+  canFire: 1
   reloadTime: 1.5
 --- !u!1 &4583777974415347734
 GameObject:
@@ -497,9 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6d401decb6e4317801ececbd9c3c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFrozen: 0
   patrol_speed: 2
   chase_speed: 4
+  isFrozen: 0
   willShootMedusa: 1
   curState: 1
   patrolPts:
@@ -508,4 +508,4 @@ MonoBehaviour:
   waitPatrolTime: 2
   patrolMinDist: 0.5
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  petrifyColor: {r: 0.5764706, g: 0.54509807, b: 0.54509807, a: 1}
+  petrifyColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
