@@ -257,7 +257,7 @@ public class Enemy_920 : Enemy_Abstract
     }
 
     // turns the enemy into stone
-    override public void Petrify(){
+    override public void Petrified(){
         isFrozen = true;
         sprRend.color = petrifyColor;
         curState = AIState.Petrify;

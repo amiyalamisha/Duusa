@@ -102,7 +102,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         if(petrifyRayOn){
             Debug.Log(petrifyRayDetect);
             if(EnemyNotPetrified()){
-                petrifyRayDetect.target.GetComponent<Enemy_Abstract>().Petrify();
+                petrifyRayDetect.target.GetComponent<Enemy_Abstract>().Petrified();
             }
         }
     }

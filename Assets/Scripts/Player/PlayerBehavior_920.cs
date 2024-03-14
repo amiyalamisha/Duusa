@@ -136,7 +136,7 @@ public class PlayerBehavior_920 : PlayerBehavior_Abstract
         // if the petrify ray is on and an enemy is in range, petrify it
         if(petrifyRayOn){
             if(EnemyNotPetrified()){
-                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrify();
+                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrified();
             }
         }
     }

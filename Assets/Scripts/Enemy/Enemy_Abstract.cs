@@ -8,6 +8,6 @@ public abstract class Enemy_Abstract : MonoBehaviour
     public bool isFrozen = false;           // allows other scripts to check if the enemy is frozen
 
     // methods
-    public abstract void Petrify();
+    public abstract void Petrified();
 
 }

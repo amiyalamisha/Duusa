@@ -141,7 +141,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (EnemyNotPetrified())
             {
-                petrifyRayDetect.target.GetComponent<Enemy_913>().Petrified();
+                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrified();
             }
         }
     }

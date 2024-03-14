@@ -9,7 +9,7 @@ public class Projectile_920 : MonoBehaviour
     // if the projectile hits the target, deal damage and die
     void OnTriggerEnter2D(Collider2D c){
         if(c.gameObject.tag == "Player"){
-            c.gameObject.GetComponent<PlayerBehavior_Abstract>().Hurt(dmg);
+            c.gameObject.GetComponent<PlayerBehavior>().Hurt(dmg);
             Destroy(this.gameObject);
         }
     }
