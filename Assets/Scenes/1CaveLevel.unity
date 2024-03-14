@@ -4918,6 +4918,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PetrifyRayRight
       objectReference: {fileID: 0}
+    - target: {fileID: 1633129153, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_TagString
+      value: Petrify
+      objectReference: {fileID: 0}
     - target: {fileID: 1633129154, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.32
@@ -4962,6 +4966,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 260760525}
+    - target: {fileID: 2259361165733840832, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: maxSpeed
+      value: 2.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840832, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: moveSnakeLength
       value: 10
@@ -5109,7 +5117,7 @@ GameObject:
   - component: {fileID: 1953091834}
   m_Layer: 0
   m_Name: PetrifyRayLeft
-  m_TagString: Untagged
+  m_TagString: Petrify
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

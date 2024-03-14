@@ -37,6 +37,7 @@ public class PlayerBehavior : MonoBehaviour
 
     [Header("Snake Grapple Properties")]
     public LayerMask grappleMask;       // layer for all grapplable surfaces
+    public float maxSpeed = 20;
     [SerializeField] private float grav;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
     [SerializeField] private float moveSnakeLength = 5;    // how far can it shoot
@@ -101,6 +102,10 @@ public class PlayerBehavior : MonoBehaviour
             // when left click is let go
             velocity = 0;
             rb.gravityScale = 0;
+        }
+        else
+        {
+            velocity = 0;
         }
         
         // right click to reach out --> grab --> devour
@@ -190,7 +195,8 @@ public class PlayerBehavior : MonoBehaviour
                 // current pos and target
                 //Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);     // target pos
                 //float distToTarget = Vector2.Distance(transform.position, mousePos);
-                velocity += Time.deltaTime * moveSpeed;
+                if (velocity < maxSpeed)
+                    velocity += Time.deltaTime * moveSpeed;
                 rb.MovePosition(Vector2.MoveTowards(transform.position, mousePos, velocity));
                 //rb.position = Vector2.Add(transform.position, points[0]);
 
@@ -265,7 +271,7 @@ public class PlayerBehavior : MonoBehaviour
     // timer for showing and activating the petrification ray
     IEnumerator FlashPetrifyRay()
     {
-        Vector2 rayPos = petrifyRayTrans.position;
+        //Vector2 rayPos = petrifyRayTrans.position;
 
         // ray on + detection
         petrifyRayOn = true;

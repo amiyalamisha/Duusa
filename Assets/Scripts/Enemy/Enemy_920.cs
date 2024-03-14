@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_920 : Enemy_Abstract
+public class Enemy_920 : MonoBehaviour
 {
     
     //---- HIDDEN VARIABLES 
@@ -21,6 +21,7 @@ public class Enemy_920 : Enemy_Abstract
 
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
+    public bool isFrozen = false;
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
     public bool willShootMedusa = true;         // if the enemy will shoot medusa on sight
     private bool allowGrab = false;
@@ -257,7 +258,7 @@ public class Enemy_920 : Enemy_Abstract
     }
 
     // turns the enemy into stone
-    override public void Petrified(){
+    public void Petrified(){
         isFrozen = true;
         sprRend.color = petrifyColor;
         curState = AIState.Petrify;
