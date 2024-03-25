@@ -4897,11 +4897,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &817563478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2259361165733840839, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+  m_PrefabInstance: {fileID: 1636796896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &919318110 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2259361165733840892, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
   m_PrefabInstance: {fileID: 1636796896}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &919318115
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817563478}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8079de45d186d7409091cd1cb764cd9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1107608989
 GameObject:
   m_ObjectHideFlags: 0
@@ -5040,11 +5065,19 @@ PrefabInstance:
       objectReference: {fileID: 260760525}
     - target: {fileID: 2259361165733840832, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: maxSpeed
-      value: 2.3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840832, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: moveSnakeLength
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_LinearDrag
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840834, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Size.x
@@ -5072,6 +5105,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840835, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840835, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_FlipY
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840835, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
@@ -5193,7 +5230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1953091833
 Transform:
   m_ObjectHideFlags: 0
