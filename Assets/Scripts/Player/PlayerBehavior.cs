@@ -54,6 +54,7 @@ public class PlayerBehavior : MonoBehaviour
     public LayerMask grappleMask;       // layer for all grapplable surfaces
     public float maxSpeed = 1.5f;
     [SerializeField] private float grav;
+    [SerializeField] private float gravMultiplier = 0;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
     [SerializeField] private float moveSnakeLength = 5;    // how far can it shoot
     [SerializeField] private float moveSnakeMin = 0.8f;    // min distance of snakes
@@ -139,11 +140,13 @@ public class PlayerBehavior : MonoBehaviour
         {
             // when left click is let go
             velocity = 0;
-            rb.gravityScale = 0.6f;
+            rb.gravityScale *= gravMultiplier;
+            //rb.drag = 3;
         }
         else
         {
             velocity = 0;
+            //rb.drag = 1;
         }
         
         // right click to reach out --> grab --> devour
