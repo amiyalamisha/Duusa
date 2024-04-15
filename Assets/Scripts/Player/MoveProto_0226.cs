@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveProto_1025 : MonoBehaviour
+public class MoveProto_0226 : MonoBehaviour
 {
     // Components
     private PlayerBehavior_Abstract playerBehavior;
@@ -30,7 +30,7 @@ public class MoveProto_1025 : MonoBehaviour
     [SerializeField] private float maxSnakeRange = 10.0f;           // the maximum distance allowed from the player for the snakes to grapple from (should be larger than target range)
     [SerializeField] private float maxTargetRange = 5.0f;           // the maximum distance allowed from the player for the target position
     public Transform mainSnakePos;
-    [SerializeField] private List<LineRenderer> snakeLines;         // snakes to spring from medusa (aesthetic purposes only)
+    [SerializeField] private List<GameObject> snakeLines;           // snakes to spring from medusa (aesthetic purposes only)
     public bool canExtend = false;                                  // able to project snakes
     [Range(0,90)]
     [SerializeField] private float snakeSpread = 30.0f;             // angle difference
@@ -55,6 +55,7 @@ public class MoveProto_1025 : MonoBehaviour
     [SerializeField] private float targDamp = 0.5f;                 // target dampening value for the spring joint
     [SerializeField] private float targDist = 0.005f;               // proximity to reach target with the minimum spring length
     [SerializeField] private float targFreq = 0.5f;                 // how many "coils" of the spring
+    [SerializeField] private float fallGrav = 0.1f;                 // how much to fall by while in mid-air
 
     // setup
     void Start(){
@@ -62,13 +63,14 @@ public class MoveProto_1025 : MonoBehaviour
         playerBehavior = transform.GetComponent<PlayerBehavior_Abstract>();
         sprRend = transform.GetComponent<SpriteRenderer>();
         spring = transform.GetComponent<SpringJoint2D>();
+        targPt = transform.position;
 
         if(targetSpr)
             targetSprRend = targetSpr.GetComponent<SpriteRenderer>();
 
         if(togSnakes){
             sprRend.color = snakeMedusa;
-            rb.gravityScale = 0;
+            rb.gravityScale = fallGrav;
             spring.enabled = true;
         }else{
             sprRend.color = normalMedusa;
@@ -82,6 +84,8 @@ public class MoveProto_1025 : MonoBehaviour
         if(GameObject.Find("MasterControl")){
             mainMenu = GameObject.Find("MasterControl").GetComponent<MenuControl>();
         }
+
+        HideSnakes();
     }
 
 
@@ -131,10 +135,12 @@ public class MoveProto_1025 : MonoBehaviour
 
             // reset values
             targPt = transform.position;
-            rb.gravityScale = togSnakes ? 0 : 1;
+            rb.gravityScale = togSnakes ? fallGrav : 1;
 
             if(!togSnakes)
                 HideSnakes();
+            else
+                SetSnakes(new Vector2(transform.position.x, transform.position.y));
         }
 
         // move to a point with snakes or do the platforming
@@ -143,6 +149,11 @@ public class MoveProto_1025 : MonoBehaviour
         }else{
             GroundMove();
         }
+
+        // debug
+        // if(Input.GetKeyDown(KeyCode.Z)){
+        //     snakeLines[0].GetComponent<SnakeRope>().HideSnakes();
+        // }
 
     }
 
@@ -223,29 +234,30 @@ public class MoveProto_1025 : MonoBehaviour
             // extend to new contact point (if able to attach)
             RaycastHit2D newHit = Physics2D.Raycast(transform.position,altVec,maxSnakeRange,grappleMask);
             if(newHit){
-                snakeLines[i].SetPosition(0, startPos);
-                snakeLines[i].SetPosition(0, mainSnakePos.InverseTransformPoint(newHit.point));
+                snakeLines[i].GetComponent<SnakeRope>().GenerateSnakeGrapple(newHit.point);
                 snakeAnchors[i] = newHit.point;
             }
-
         }
 
     }
 
     // shows the snakes in the position
     private void ShowSnakes(){
-        Vector2 startPos = mainSnakePos.localPosition;
+        // Vector2 startPos = mainSnakePos.localPosition;
         for(int i=0;i<snakeLines.Count;i++){
-            snakeLines[i].SetPosition(0, startPos);
-            snakeLines[i].SetPosition(0, mainSnakePos.InverseTransformPoint((snakeAnchors[i])));
+            snakeLines[i].SetActive(true);
+            // SetSnakes(permaContactPt);
+            snakeLines[i].GetComponent<SnakeRope>().UpdateSnakeRope();
         }
     }
 
     private void HideSnakes(){
         for(int i=0;i<snakeLines.Count;i++){
-            snakeLines[i].SetPosition(0, Vector2.zero);
-            snakeLines[i].SetPosition(0, Vector2.zero);
+            snakeLines[i].GetComponent<SnakeRope>().HideSnakes();
+            snakeLines[i].SetActive(false);
         }
+
+        // hide the objects
     }
 
 
