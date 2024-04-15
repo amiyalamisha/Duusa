@@ -5077,11 +5077,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Mass
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: e376abe60244ae848909c4e2a8a15627, type: 2}
+    - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_LinearDrag
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840833, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259361165733840834, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Size.x
@@ -5091,6 +5103,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1.7790546
       objectReference: {fileID: 0}
+    - target: {fileID: 2259361165733840834, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: e376abe60244ae848909c4e2a8a15627, type: 2}
     - target: {fileID: 2259361165733840834, guid: f92b499b432bb52438de13dd8f7bd88e, type: 3}
       propertyPath: m_Offset.x
       value: 0.061662674
