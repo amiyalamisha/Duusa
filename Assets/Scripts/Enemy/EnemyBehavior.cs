@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public static EnemyBehavior instance;
+
     public float speed;
     public float distance;
 
@@ -24,8 +26,13 @@ public class EnemyBehavior : MonoBehaviour
 
     public bool isShooting;         // is this enemy instance shooting?
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
+    {
+        instance = this;
+    }
+
+        // Start is called before the first frame update
+        void Start()
     {
         GameObject[] temp = GameObject.FindGameObjectsWithTag("Player");
         player = temp[0];

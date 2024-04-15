@@ -6,6 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public static PlayerBehavior instance;
+
     [Header("General Properties")]
     public Camera cam;
     public LineRenderer movementSnakes;
@@ -13,6 +15,11 @@ public class PlayerBehavior : MonoBehaviour
     EdgeCollider2D edgeCollider;
     private Animator playerAnim;
     private SpriteRenderer sprRend;         // sprite renderer of the player
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public enum DuusaStates
     {
