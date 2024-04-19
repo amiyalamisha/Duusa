@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_920 : Enemy_Abstract
+public class Enemy_920 : MonoBehaviour
 {
     
     //---- HIDDEN VARIABLES 
@@ -11,6 +11,7 @@ public class Enemy_920 : Enemy_Abstract
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
     private EnemyProjectileAttack projAtt;       // projectile attack script
+    private PlayerBehavior playerBehavior;
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
 
@@ -20,8 +21,10 @@ public class Enemy_920 : Enemy_Abstract
 
     public float patrol_speed = 3.0f;           // speed of movement for the idle behavior
     public float chase_speed = 5.0f;          // speed of movement for the chase behavior
+    public bool isFrozen = false;
     private bool facingRight = true;           // is facing the right direction (rot=0) or left (rot=180) (default right, change if otherwise)
     public bool willShootMedusa = true;         // if the enemy will shoot medusa on sight
+    private bool allowGrab = false;
 
     // AI behavior state
     [System.Serializable]
@@ -30,9 +33,10 @@ public class Enemy_920 : Enemy_Abstract
         Patrol,             // walking around, peacefully
         Chase,              // chasing after medusa
         Shoot,              // planted, trying to shoot medusa,
-        Petrify             // enemy is turned to stone - do not move
+        Petrify,            // enemy is turned to stone - do not move
+        Grabbed             // being grabbed by the player, stop moving
     }
-    public AIState curState;                // current state of the enemy
+    public AIState currentEnemyState;                // current state of the enemy
 
     // patrol properties
     public List<Transform> patrolPts;       // points the AI moves to in patrol phase (goes in listed order before restarting at the top)
@@ -73,13 +77,15 @@ public class Enemy_920 : Enemy_Abstract
         if(transform.Find("Projectile"))
             projAtt = transform.Find("Projectile").GetComponent<EnemyProjectileAttack>();
 
+        playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>();        // finding player script
+
         sprRend = transform.GetComponent<SpriteRenderer>();         // assume that the enemy will always have a sprite renderer
 
 
 
 
         // set starting color to unpetrified
-        if(curState != AIState.Petrify)
+        if(currentEnemyState != AIState.Petrify)
             sprRend.color = normalColor;
         else
             sprRend.color = petrifyColor;
@@ -89,14 +95,14 @@ public class Enemy_920 : Enemy_Abstract
     // Update is called once per frame
     void Update(){
         // controls the AI behvaior (see the FSM diagram)
-        switch(curState){
+        switch(currentEnemyState){
             case AIState.Idle:
                 // doesn't matter, don't do nothing lol
                 // maybe animation?
 
                 // if medusa in range, chase her
                 if(lookRange.medusaInSight)
-                    curState = AIState.Chase;
+                    currentEnemyState = AIState.Chase;
 
                 break;
 
@@ -105,11 +111,11 @@ public class Enemy_920 : Enemy_Abstract
                 if(patrolPts.Count > 0)                     // if there are patrol points, go to them
                     GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
                 else                                        // otherwise be idle
-                    curState = AIState.Idle;
+                    currentEnemyState = AIState.Idle;
 
                 // if medusa in range, chase her
                 if(lookRange.medusaInSight)
-                    curState = AIState.Chase;
+                    currentEnemyState = AIState.Chase;
                 break;
 
 
@@ -121,12 +127,12 @@ public class Enemy_920 : Enemy_Abstract
                 }
                 // if lost the target, go back to patrol
                 else if(shootRange.target == null){
-                    curState = AIState.Idle;
+                    currentEnemyState = AIState.Idle;
                     StartCoroutine(TranstitionState(AIState.Patrol, waitPatrolTime));
                 }
                 // otherwise try to shoot her
                 else if(InRangeX(transform, shootRange.target, 3.0f)){
-                    curState = AIState.Shoot;
+                    currentEnemyState = AIState.Shoot;
                 }
 
                 break;
@@ -147,12 +153,12 @@ public class Enemy_920 : Enemy_Abstract
                 }
                 // if lost the target, go back to patrol after waiting a bit
                 else if(shootRange.target == null){
-                    curState = AIState.Idle;
+                    currentEnemyState = AIState.Idle;
                     StartCoroutine(TranstitionState(AIState.Patrol, waitPatrolTime));
                 }
                 // otherwise try to shoot her
                 else if(!InRangeX(transform, shootRange.target, 3.0f)){
-                    curState = AIState.Chase;
+                    currentEnemyState = AIState.Chase;
                 }
                 break;
 
@@ -168,20 +174,37 @@ public class Enemy_920 : Enemy_Abstract
                 }
 
                 break;
+
+
+            case AIState.Grabbed:
+                if (Input.GetMouseButton(1) && allowGrab)
+                {
+                    this.gameObject.transform.position = new Vector3(playerBehavior.edges[0].x, playerBehavior.edges[0].y, 0);
+                }
+                else if (!allowGrab)
+                {
+                    Debug.Log("let go");
+
+                    StartCoroutine(TranstitionState(AIState.Chase, 2f));
+                    allowGrab = true;
+
+                }
+
+                break;
         }
 
 
         // render areas for debugging
         if(debugView && patrolArea){
-            patrolArea.enabled = curState == AIState.Patrol || curState == AIState.Idle;
+            patrolArea.enabled = currentEnemyState == AIState.Patrol || currentEnemyState == AIState.Idle;
         }
         if(debugView && shootArea){
-            shootArea.enabled = curState == AIState.Chase || curState == AIState.Shoot;
+            shootArea.enabled = currentEnemyState == AIState.Chase || currentEnemyState == AIState.Shoot;
         }
 
         // override and make petrified if frozen
         if(isFrozen)
-            curState = AIState.Petrify;
+            currentEnemyState = AIState.Petrify;
 
     }
 
@@ -213,7 +236,7 @@ public class Enemy_920 : Enemy_Abstract
             Move(magnitude);
         }
         // otherwise, wait at the point, and start again
-        else if(curState == AIState.Patrol){
+        else if(currentEnemyState == AIState.Patrol){
             StartCoroutine(NextPatrolPt());
         }
     }
@@ -221,23 +244,23 @@ public class Enemy_920 : Enemy_Abstract
     // transition to a new AI state after a certain amount of time
     IEnumerator TranstitionState(AIState nextState, float transTime){
         yield return new WaitForSeconds(transTime);
-        curState = nextState;
+        currentEnemyState = nextState;
     }
 
     // delay before going to the next patrol point
     IEnumerator NextPatrolPt(){
-        curState = AIState.Idle;
+        currentEnemyState = AIState.Idle;
         yield return new WaitForSeconds(waitPatrolTime);
         patrolInd+=1;
         patrolInd %= patrolPts.Count;
-        curState = AIState.Patrol;
+        currentEnemyState = AIState.Patrol;
     }
 
     // turns the enemy into stone
-    override public void Petrify(){
+    public void Petrified(){
         isFrozen = true;
         sprRend.color = petrifyColor;
-        curState = AIState.Petrify;
+        currentEnemyState = AIState.Petrify;
     }
 
     //=================    CONTROL FUNCTIONS   ===================//
@@ -260,5 +283,36 @@ public class Enemy_920 : Enemy_Abstract
             // Debug.Log("to the right");
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "grabSnake" && !isFrozen)
+        {
+            allowGrab = true;
+            currentEnemyState = AIState.Grabbed;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (allowGrab)
+        {
+            allowGrab = false;
+        }
+            
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && currentEnemyState == AIState.Grabbed)
+        {
+            Debug.Log("enemy died");
+            Destroy(gameObject);
+        }
+    }
+    
+    //IEnumerator DyingDelay()
+    
+
 
 }

@@ -6,15 +6,34 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public static PlayerBehavior instance;
+
     [Header("General Properties")]
     public Camera cam;
     public LineRenderer movementSnakes;
     public LineRenderer grabbingSnakes;
     EdgeCollider2D edgeCollider;
-    public Animator playerAnim;
+    private Animator playerAnim;
+    private SpriteRenderer sprRend;         // sprite renderer of the player
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public enum DuusaStates
+    {
+        Idle,                   // not moving
+        Crawl,                  // moving around with snakes
+        //Walking,              // normally walking
+        Petrify,                // turning enemies to stone
+        Grabbing,               // grabbing with snake
+        Devour                  // devouring an enemy
+    }
+    public DuusaStates currentDuusaState;
 
     [Header("Health Properties")]
-    private SpriteRenderer sprRend;         // sprite renderer of the player
+
     public int maxHealth = 3;               // maximum possible health of the player
     public int curHealth = 3;               // current health of the player
     public float healthGraceAmt = 0.6f;     // invulnerability time before can take damage again
@@ -25,9 +44,12 @@ public class PlayerBehavior : MonoBehaviour
 
     // petrification properties
     [Header("Petrification Properties")]
-    private SpriteRenderer petrifyRaySpr;           // sprite render for the petrification ray (toggles on and off)
-    private Transform petrifyRayTrans;              // reference to transform for the petrification ray (to flip when not facing right)
-    private DetectionRange_GEN petrifyRayDetect;    // detection script for whether an enemy is in the petrification area
+    private SpriteRenderer petrifyRaySprR;           // sprite render for the petrification ray (toggles on and off)
+    private Transform petrifyRayTransR;              // reference to transform for the petrification ray (to flip when not facing right)
+    private DetectionRange_GEN petrifyRayDetectR;    // detection script for whether an enemy is in the petrification area
+    private SpriteRenderer petrifyRaySprL;           // all petrify ray info for left side
+    private Transform petrifyRayTransL;              
+    private DetectionRange_GEN petrifyRayDetectL;
     private bool petrifyRayOn = false;              // boolean for if the ray is activated  
     public float petrifyRayOnTime = 0.3f;           // how long the ray stays activated for
     public float petrifyRayCooldown = 2.0f;         // how long before the ray can be used again
@@ -37,7 +59,9 @@ public class PlayerBehavior : MonoBehaviour
 
     [Header("Snake Grapple Properties")]
     public LayerMask grappleMask;       // layer for all grapplable surfaces
+    public float maxSpeed = 1.5f;
     [SerializeField] private float grav;
+    [SerializeField] private float gravMultiplier = 0;
     [SerializeField] private float moveSpeed = 2;         // speed when it pulls you
     [SerializeField] private float moveSnakeLength = 5;    // how far can it shoot
     [SerializeField] private float moveSnakeMin = 0.8f;    // min distance of snakes
@@ -47,12 +71,18 @@ public class PlayerBehavior : MonoBehaviour
     public int maxPoints = 3;       // how many movement snakes can you shoot max
 
     private Rigidbody2D rb;
+    private Vector2 direction;
     private List<Vector2> points = new List<Vector2>();     // all working movement snakes
     public List<Vector2> edges = new List<Vector2>();
+
+    private Dialogue myDialogue;
 
     // Start is called before the first frame update
     void Start()
     {
+        myDialogue = GameObject.Find("SampleDialogue").GetComponent<Dialogue>();
+
+        playerAnim = GetComponent<Animator>();
         sprRend = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         origColor = sprRend.color;
@@ -63,17 +93,26 @@ public class PlayerBehavior : MonoBehaviour
         movementSnakes.enabled = false;
         grabbingSnakes.enabled = false;
 
+        // petrification setup
         // search for the petrification ray child object if available
-        Transform petRay = transform.Find("PetrifyRay");
-        if (petRay != null)
+        Transform petRayRight = transform.Find("PetrifyRayRight");
+        Transform petRayLeft = transform.Find("PetrifyRayLeft");
+        if (petRayRight != null)
         {
-            petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
-            petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
-            petrifyRayTrans = petRay.GetComponent<Transform>();
-            petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
+            petrifyRayDetectR = petRayRight.GetComponent<DetectionRange_GEN>();
+            petrifyRaySprR = petRayRight.GetComponent<SpriteRenderer>();
+            petrifyRayTransR = petRayRight.GetComponent<Transform>();
+            petrifyRaySprR.enabled = false;   // turn off the sprite renderer at the start
+        }
+        if (petRayLeft != null)
+        {
+            petrifyRayDetectL = petRayLeft.GetComponent<DetectionRange_GEN>();
+            petrifyRaySprL = petRayLeft.GetComponent<SpriteRenderer>();
+            petrifyRayTransL = petRayLeft.GetComponent<Transform>();
+            petrifyRaySprR.enabled = false;   // turn off the sprite renderer at the start
         }
 
-        // start with max health
+        // health set up
         curHealth = maxHealth;
 
         // if the health GUI is added, set the max and current amounts
@@ -85,9 +124,12 @@ public class PlayerBehavior : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
-        // when no keys are down and lines are not enabled
+    {/*
+        switch (currentDuusaState)
+        {
+
+        }*/
+
         if (!Input.anyKey && !movementSnakes.enabled)
         {
             rb.gravityScale = grav;         // enabling gravity when lines are gone
@@ -97,18 +139,33 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             PlayerMovement();
+            if (!facingRight)
+            {
+                sprRend.flipX = true;
+            }
+            else
+            {
+                sprRend.flipX = false;
+            }
         }
         else if(movementSnakes.enabled)
         {
             // when left click is let go
             velocity = 0;
-            rb.gravityScale = 0;
+            rb.gravityScale *= gravMultiplier;
+            //rb.drag = 3;
+        }
+        else
+        {
+            velocity = 0;
+            //rb.drag = 1;
         }
         
         // right click to reach out --> grab --> devour
         if(Input.GetMouseButton(1))
         {
             Devour();
+            
         }
         else
         {
@@ -120,7 +177,7 @@ public class PlayerBehavior : MonoBehaviour
             Petrify();
         }
 
-        // allowing the starting point for all line rendenderers to follow the player, even when not moving
+        // allowing the starting point for all line rendenders to follow the player, even when not moving
         if (movementSnakes.enabled)
         {
             //lr.SetPosition(0, rb.position);
@@ -137,12 +194,20 @@ public class PlayerBehavior : MonoBehaviour
             Detatch();
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            myDialogue.TriggerDialogue();
+        }
+
         // if the petrify ray is on and an enemy is in range, petrify it
         if (petrifyRayOn)
         {
             if (EnemyNotPetrified())
             {
-                petrifyRayDetect.target.GetComponent<Enemy_913>().Petrified();
+                if(facingRight)
+                    petrifyRayDetectR.target.GetComponent<Enemy_920>().Petrified();
+                else
+                    petrifyRayDetectL.target.GetComponent<Enemy_920>().Petrified();
             }
         }
     }
@@ -151,8 +216,8 @@ public class PlayerBehavior : MonoBehaviour
     void PlayerMovement()
     {
         Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);                 // target pos
-        Vector2 direction = (mousePos - (Vector2)transform.position).normalized;        // where the player should be moving
-        
+        direction = (mousePos - (Vector2)transform.position).normalized;        // where the player should be moving
+       
         // for which direction the player is currently facing (used for petrifry)
         if(direction.x < 0)
         {
@@ -163,7 +228,7 @@ public class PlayerBehavior : MonoBehaviour
             facingRight = true;
         }
         
-        Debug.Log(facingRight);
+        //Debug.Log(facingRight);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, moveSnakeLength, grappleMask);
         // trying to randomize in the general range of where the first hit point is aiming
 
@@ -171,7 +236,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                rb.gravityScale = 0.2f;
+                rb.gravityScale = 0.5f;
                 movementSnakes.enabled = true;      // enable line
 
                 Vector2 hitpoint = hit.point;
@@ -181,7 +246,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (points.Count > maxPoints)
                 {
                     points.RemoveAt(0);     // deactivates?
-                    Debug.Log(points.Count);
+                    //Debug.Log(points.Count);
                 }
             }
 
@@ -191,7 +256,8 @@ public class PlayerBehavior : MonoBehaviour
                 // current pos and target
                 //Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);     // target pos
                 //float distToTarget = Vector2.Distance(transform.position, mousePos);
-                velocity += Time.deltaTime * moveSpeed;
+                if (velocity < maxSpeed)
+                    velocity += Time.deltaTime * moveSpeed;
                 rb.MovePosition(Vector2.MoveTowards(transform.position, mousePos, velocity));
                 //rb.position = Vector2.Add(transform.position, points[0]);
 
@@ -251,9 +317,19 @@ public class PlayerBehavior : MonoBehaviour
 
     bool EnemyNotPetrified()
     {
-        return petrifyRayDetect.targetInSight
-        && petrifyRayDetect.target.tag == "enemy"
-        && !petrifyRayDetect.target.GetComponent<Enemy_920>().isFrozen;
+        if (facingRight)
+        {
+            return petrifyRayDetectR.targetInSight
+            && petrifyRayDetectR.target.tag == "enemy"
+            && !petrifyRayDetectR.target.GetComponent<Enemy_920>().isFrozen;
+        }
+        else
+        {
+            return petrifyRayDetectL.targetInSight
+            && petrifyRayDetectL.target.tag == "enemy"
+            && !petrifyRayDetectL.target.GetComponent<Enemy_920>().isFrozen;
+        }
+
     }
 
     // turning enemies to stone
@@ -266,46 +342,27 @@ public class PlayerBehavior : MonoBehaviour
     // timer for showing and activating the petrification ray
     IEnumerator FlashPetrifyRay()
     {
-        Vector2 rayPos = petrifyRayTrans.position;
+        //Vector2 rayPos = petrifyRayTrans.position;
 
         // ray on + detection
         petrifyRayOn = true;
-        petrifyRaySpr.enabled = true;
-        canPetrify = false;
-        /*
-        if (!facingRight)
-        {
-            if (petrifyRaySpr.flipY)
-            {
-                petrifyRayTrans.position = new Vector2(rayPos.x, rayPos.y);
-            }
-            else
-            {
-                petrifyRaySpr.flipY = true;
-                //rayPos *= -1;
-                petrifyRayTrans.position = new Vector2(-rayPos.x+reposRay, rayPos.y);
-                Debug.Log("faceright shot");
-            }
-        }
-                
+
+        if(facingRight)
+            petrifyRaySprR.enabled = true;
         else
-        {
-            if (petrifyRaySpr.flipY)
-            {
-                petrifyRaySpr.flipY = false;
-                petrifyRayTrans.position = new Vector2(-rayPos.x+ reposRay, rayPos.y);
-            }
-            else
-            {
-                petrifyRayTrans.position = new Vector2(rayPos.x, rayPos.y);
-            }
-        }*/
+            petrifyRaySprL.enabled = true;
+
+        canPetrify = false;
 
         yield return new WaitForSeconds(petrifyRayOnTime);
 
         // ray off
         petrifyRayOn = false;
-        petrifyRaySpr.enabled = false;
+
+        if (facingRight)
+            petrifyRaySprR.enabled = false;
+        else
+            petrifyRaySprL.enabled = false;
 
         // ray cooldown
         yield return new WaitForSeconds(petrifyRayCooldown);

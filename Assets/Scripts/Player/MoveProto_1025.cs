@@ -78,8 +78,10 @@ public class MoveProto_1025 : MonoBehaviour
 
         snakeAnchors = new Vector2[snakeLines.Count];
 
-
-        mainMenu = GameObject.Find("MasterControl").GetComponent<MenuControl>();
+        // if the master control script is in the scene, set the menu
+        if(GameObject.Find("MasterControl")){
+            mainMenu = GameObject.Find("MasterControl").GetComponent<MenuControl>();
+        }
     }
 
 
