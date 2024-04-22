@@ -143,7 +143,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     bool EnemyNotPetrified(){
         return petrifyRayDetect.targetInSight 
         && petrifyRayDetect.target.tag == "enemy" 
-        && !petrifyRayDetect.target.GetComponent<Enemy_Abstract>().isFrozen;
+        && !petrifyRayDetect.target.GetComponent<Enemy_920>().isFrozen;
     }
 
     // turning enemies to stone
