@@ -1073,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7012826413982882007
 Transform:
   m_ObjectHideFlags: 0
@@ -1439,8 +1439,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.126691, g: 0.6886792, b: 0.48900563, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 2eb1f0a10fa76054a9876934338df8e9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1484,18 +1484,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.024808943, y: -0.1240446}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6526753, y: 1.7938854}
   m_EdgeRadius: 0
 --- !u!231 &7012826414166684365
 SpringJoint2D:
@@ -1538,7 +1538,6 @@ MonoBehaviour:
   curHealth: 3
   healthGraceAmt: 0.6
   canHurt: 1
-  hurtColor: {r: 0.042986836, g: 0.3962264, b: 0.2711207, a: 1}
   healthGUI: {fileID: 0}
   petrifyRayOnTime: 0.3
   petrifyRayCooldown: 2

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 {
@@ -90,7 +91,8 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         // right click to reach out --> grab --> devour
         if(Input.GetMouseButton(1)){
             Devour();
-        }else{
+        }
+        else{
             grabbingSnakes.enabled = false;
         }
 
@@ -103,7 +105,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         if(petrifyRayOn){
             Debug.Log(petrifyRayDetect);
             if(EnemyNotPetrified()){
-                petrifyRayDetect.target.GetComponent<Enemy_Abstract>().Petrified();
+                petrifyRayDetect.target.GetComponent<Enemy_920>().Petrified();
             }
         }
     }
@@ -132,14 +134,6 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 
     void GrabbingSnakeCollisions(LineRenderer snake)
     {
-        /*List<Vector2> edges = new List<Vector2>();
-
-        // hard coding only one snake for now
-        Vector2 snakePoint = snake.GetPosition(1);      // for the end point position of the line
-        edges.Add(new Vector2(snakePoint.x, snakePoint.y));
-
-        edgeCollider.SetPoints(edges);*/
-
         Vector2 snakePoint = snake.GetPosition(1);
         edges[0] = new Vector2(snakePoint.x, snakePoint.y);
         edgeCollider.SetPoints(edges);
@@ -218,4 +212,11 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         Application.LoadLevel(Application.loadedLevel);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Exit")
+        {
+            SceneManager.LoadScene("2CaveLevel");
+        }
+    }
 }

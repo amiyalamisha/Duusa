@@ -69,11 +69,11 @@ public class MoveProto_0226 : MonoBehaviour
             targetSprRend = targetSpr.GetComponent<SpriteRenderer>();
 
         if(togSnakes){
-            sprRend.color = snakeMedusa;
+            //sprRend.color = snakeMedusa;
             rb.gravityScale = fallGrav;
             spring.enabled = true;
         }else{
-            sprRend.color = normalMedusa;
+            //sprRend.color = normalMedusa;
             rb.gravityScale = 1;
             spring.enabled = false;
         }
@@ -131,7 +131,7 @@ public class MoveProto_0226 : MonoBehaviour
             spring.enabled = togSnakes;
             targetSpr.SetActive(togSnakes);
             targetLine.enabled = togSnakes;
-            sprRend.color = togSnakes ? snakeMedusa : normalMedusa;
+            //sprRend.color = togSnakes ? snakeMedusa : normalMedusa;
 
             // reset values
             targPt = transform.position;
@@ -146,7 +146,8 @@ public class MoveProto_0226 : MonoBehaviour
         // move to a point with snakes or do the platforming
         if(togSnakes){
             Snakes();
-        }else{
+        }
+        if(Input.GetKeyDown(KeyCode.Space)){
             GroundMove();
         }
 
