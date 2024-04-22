@@ -23,12 +23,10 @@ public class PlayerBehavior : MonoBehaviour
 
     public enum DuusaStates
     {
-        Idle,                   // not moving
-        Crawl,                  // moving around with snakes
-        //Walking,              // normally walking
-        Petrify,                // turning enemies to stone
-        Grabbing,               // grabbing with snake
-        Devour                  // devouring an enemy
+        Idle,                   // not moving and allowing petrify
+        Crawl,                  // moving around with snakes and also devouring
+        Walking                // normally walking
+        //Pause
     }
     public DuusaStates currentDuusaState;
 
@@ -119,53 +117,68 @@ public class PlayerBehavior : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
+    {
+        // see duusa FSM diagram
         switch (currentDuusaState)
         {
+            case DuusaStates.Idle:
+                // when there are no movement snakes out
+                if (!Input.anyKey && !movementSnakes.enabled)
+                    {
+                        rb.gravityScale = grav;         // enabling gravity when lines are gone
+                    }
+                break;
 
-        }*/
-
-        if (!Input.anyKey && !movementSnakes.enabled)
-        {
-            rb.gravityScale = grav;         // enabling gravity when lines are gone
-        }
-
-        // checking left click button every frame
-        if (Input.GetMouseButton(0))
-        {
-            PlayerMovement();
-            if (!facingRight)
-            {
-                sprRend.flipX = true;
-            }
-            else
-            {
-                sprRend.flipX = false;
-            }
-        }
-        else if(movementSnakes.enabled)
-        {
-            // when left click is let go
-            velocity = 0;
-            rb.gravityScale *= gravMultiplier;
-            //rb.drag = 3;
-        }
-        else
-        {
-            velocity = 0;
-            //rb.drag = 1;
-        }
+            case DuusaStates.Crawl:
+                // CRAWLING ON WALLS SNAKES AND MOVEMENTS
+                if (Input.GetMouseButton(0))        // checking left click button every frame
+                {
+                    PlayerMovement();
+                    if (!facingRight)
+                    {
+                        sprRend.flipX = true;
+                    }
+                    else
+                    {
+                        sprRend.flipX = false;
+                    }
+                }
+                else if(movementSnakes.enabled)
+                {
+                    // when left click is let go
+                    velocity = 0;
+                    rb.gravityScale *= gravMultiplier;
+                    //rb.drag = 3;
+                }
+                else
+                {
+                    velocity = 0;
+                    //rb.drag = 1;
+                }
         
-        // right click to reach out --> grab --> devour
-        if(Input.GetMouseButton(1))
-        {
-            Devour();
+                // right click to reach out --> grab --> devour
+                if(Input.GetMouseButton(1))
+                {
+                    Devour();
             
+                }
+                else
+                {
+                    grabbingSnakes.enabled = false;
+                }
+
+                // only detach manually back onto ground
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Detatch();
+                    currentDuusaState = DuusaStates.Idle;
+                }
+                break;
         }
-        else
-        {
-            grabbingSnakes.enabled = false;
-        }
+
+       
+
+
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -183,11 +196,7 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
 
-        // only detach manually
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Detatch();
-        }
+
 
         // if the petrify ray is on and an enemy is in range, petrify it
         if (petrifyRayOn)
