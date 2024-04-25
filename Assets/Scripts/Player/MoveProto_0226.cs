@@ -16,7 +16,7 @@ public class MoveProto_0226 : MonoBehaviour
     private MenuControl mainMenu;                                   // menu object of the game
 
     [Header("Controls")]
-    [SerializeField] private KeyCode snakeToggleBtn = KeyCode.LeftShift;       // toggle using snakes
+    [SerializeField] private KeyCode snakeToggleBtn = KeyCode.Space;       // toggle using snakes
     [SerializeField] private KeyCode jumpBtn = KeyCode.W;                      // jump button
     
 
@@ -101,7 +101,7 @@ public class MoveProto_0226 : MonoBehaviour
             contactPt = CanExtendSnake(maxPt);
 
             // set the target position to move to if valid and extend snakes to nearby contact point
-            if(Input.GetMouseButton(0) && togSnakes && canExtend){
+            if(Input.GetMouseButtonDown(0) && togSnakes && canExtend){
                 targPt = maxPt;
                 permaContactPt = new Vector2(contactPt.point.x,contactPt.point.y);
                 SetSnakes(permaContactPt);
