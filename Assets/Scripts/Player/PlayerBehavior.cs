@@ -15,6 +15,8 @@ public class PlayerBehavior : MonoBehaviour
     EdgeCollider2D edgeCollider;
     private Animator playerAnim;
     private SpriteRenderer sprRend;         // sprite renderer of the player
+    bool isSwinging = false;
+    bool hasGrabbed = false;
 
     private void Awake()
     {
@@ -125,6 +127,10 @@ public class PlayerBehavior : MonoBehaviour
 
         }*/
 
+        //set aninmator values
+        playerAnim.SetBool("currentlySwinging", isSwinging);
+        playerAnim.SetBool("isGrabbing", hasGrabbed);
+
         if (!Input.anyKey && !movementSnakes.enabled)
         {
             rb.gravityScale = grav;         // enabling gravity when lines are gone
@@ -133,6 +139,7 @@ public class PlayerBehavior : MonoBehaviour
         // checking left click button every frame
         if (Input.GetMouseButton(0))
         {
+            isSwinging = true;
             PlayerMovement();
             if (!facingRight)
             {
@@ -149,6 +156,7 @@ public class PlayerBehavior : MonoBehaviour
             velocity = 0;
             rb.gravityScale *= gravMultiplier;
             //rb.drag = 3;
+            isSwinging = false;
         }
         else
         {
@@ -160,11 +168,13 @@ public class PlayerBehavior : MonoBehaviour
         if(Input.GetMouseButton(1))
         {
             Devour();
-            
+            hasGrabbed = true;
+
         }
         else
         {
             grabbingSnakes.enabled = false;
+            hasGrabbed = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
