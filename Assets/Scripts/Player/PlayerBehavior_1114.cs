@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 {
@@ -34,10 +35,12 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     private Vector3 petRot;
     private SpriteRenderer petrifyRaySpr;           // sprite render for the petrification ray (toggles on and off)
     private DetectionRange_GEN petrifyRayDetect;    // detection script for whether an enemy is in the petrification area
+    private PolygonCollider2D petrifyRayCollider;   // collider component for ray
     private bool petrifyRayOn = false;              // boolean for if the ray is activated  
     public float petrifyRayOnTime = 0.3f;           // how long the ray stays activated for
     public float petrifyRayCooldown = 2.0f;         // how long before the ray can be used again
     private bool canPetrify = true;                 // flag for whether or not the petrification ray can be used
+    private Color orgRayColor;                      // orginal ray color
 
     [Header("Snake Grapple Properties")]
     [SerializeField] private float grabSnakeMax = 5;    // min distance of snakes
@@ -67,6 +70,8 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
             petRot = petRay.localEulerAngles;
             petrifyRayDetect = petRay.GetComponent<DetectionRange_GEN>();
             petrifyRaySpr = petRay.GetComponent<SpriteRenderer>();
+            petrifyRayCollider = petRay.GetComponent<PolygonCollider2D>();
+            orgRayColor = petrifyRaySpr.color;
             petrifyRaySpr.enabled = false;   // turn off the sprite renderer at the start
         }
 
@@ -81,12 +86,12 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         // set direction of petrify based on direction
         if(petRay){
             petRay.localPosition = direction == "right" ? petPos : new Vector3(petPos.x*-1.0f,petPos.y,petPos.z);
             petRay.localEulerAngles = direction == "right" ? petRot : new Vector3(petRot.x,petRot.y+180,petRot.z);
-        }
+        }*/
 
         // right click to reach out --> grab --> devour
         if(Input.GetMouseButton(1)){
@@ -96,9 +101,13 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
             grabbingSnakes.enabled = false;
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PetrifyAim();
+        }
 
         // if the petrify ray is on and an enemy is in range, petrify it
-        if (Input.GetKeyDown(KeyCode.Q)){
+        if (Input.GetKeyUp(KeyCode.Q)){
             Petrify();
         }
         
@@ -146,6 +155,27 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         && !petrifyRayDetect.target.GetComponent<Enemy_920>().isFrozen;
     }
 
+    // aiming the petrify
+    void PetrifyAim()
+    {
+        if (canPetrify)
+        {
+            Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);     // target pos
+            //Vector2 direction = (mousePos - (Vector2)transform.position).normalized;
+            Vector3 direction = mousePos - petRay.position;
+
+            petrifyRayCollider.enabled = false;
+            petrifyRayOn = true;
+            petrifyRaySpr.enabled = true;
+            Color color = petrifyRaySpr.color;
+            color.a = 0.5f;
+            petrifyRaySpr.color = color;
+
+            petRay.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+
+        }
+    }
+
     // turning enemies to stone
     void Petrify()
     {
@@ -156,6 +186,8 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     // timer for showing and activating the petrification ray
     IEnumerator FlashPetrifyRay(){
         // ray on + detection
+        petrifyRaySpr.color = orgRayColor;
+        petrifyRayCollider.enabled = true;
         petrifyRayOn = true;
         petrifyRaySpr.enabled = true;
         canPetrify = false;
