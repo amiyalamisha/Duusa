@@ -102,6 +102,7 @@ public class MoveProto_0226 : MonoBehaviour
 
             // set the target position to move to if valid and extend snakes to nearby contact point
             if(Input.GetMouseButtonDown(0) && togSnakes && canExtend){
+                PlayerBehavior_1114.instance.isSwinging = true;
                 targPt = maxPt;
                 permaContactPt = new Vector2(contactPt.point.x,contactPt.point.y);
                 SetSnakes(permaContactPt);
@@ -122,6 +123,10 @@ public class MoveProto_0226 : MonoBehaviour
             if(canExtend){
                 ShowSnakes();
             }
+        }
+        else
+        {
+            PlayerBehavior_1114.instance.isSwinging = false;
         }
 
         // toggle whether medusa is using her grapple snakes or not

@@ -7,16 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 {
+    public static PlayerBehavior_1114 instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Components
-    private Rigidbody2D rb;                                         // rigidbody physics collider   
-    private SpriteRenderer sprRend;                                 // sprite renderer   
-
-
     [Header("General Properties")]
     public Camera cam;
     public LineRenderer grabbingSnakes;
     EdgeCollider2D edgeCollider;
     public Animator playerAnim;
+    private Rigidbody2D rb;                                         // rigidbody physics collider   
+    private SpriteRenderer sprRend;                                 // sprite renderer   
+    public bool isSwinging = false;
+    bool hasGrabbed = false;
 
     [Header("Health Properties")]
     public int maxHealth = 3;               // maximum possible health of the player
@@ -52,7 +58,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         // inherited properties from abstract class
         edges = new List<Vector2>();
 
-
+        playerAnim = GetComponent<Animator>();
         sprRend = GetComponent<SpriteRenderer>();
         //origColor = sprRend.color;
         rb = GetComponent<Rigidbody2D>();
@@ -82,8 +88,25 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     // Update is called once per frame
     void Update()
     {
+        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);                 // target pos
+        Vector2 dir = (mousePos - (Vector2)transform.position).normalized;        // where the player should be moving
+
+        // for which direction the player is currently facing (used for petrifry)
+        if (dir.x < 0)
+        {
+            sprRend.flipX = true;
+        }
+        else
+        {
+            sprRend.flipX = false;
+        }
+
+        //set aninmator values
+        playerAnim.SetBool("currentlySwinging", isSwinging);
+        playerAnim.SetBool("isGrabbing", hasGrabbed);
+
         // set direction of petrify based on direction
-        if(petRay){
+        if (petRay){
             petRay.localPosition = direction == "right" ? petPos : new Vector3(petPos.x*-1.0f,petPos.y,petPos.z);
             petRay.localEulerAngles = direction == "right" ? petRot : new Vector3(petRot.x,petRot.y+180,petRot.z);
         }
@@ -91,9 +114,11 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         // right click to reach out --> grab --> devour
         if(Input.GetMouseButton(1)){
             Devour();
+            hasGrabbed = true;
         }
         else{
             grabbingSnakes.enabled = false;
+            hasGrabbed = false;
         }
 
 

@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    public static PlayerBehavior instance;
+    //public static PlayerBehavior instance;
 
     [Header("General Properties")]
     public Camera cam;
@@ -17,11 +17,11 @@ public class PlayerBehavior : MonoBehaviour
     private SpriteRenderer sprRend;         // sprite renderer of the player
     bool isSwinging = false;
     bool hasGrabbed = false;
-
+    /*
     private void Awake()
     {
         instance = this;
-    }
+    }*/
 
     public enum DuusaStates
     {
