@@ -21,6 +21,8 @@ public class MenuControl : MonoBehaviour
     [Header("Accessible Properties")]
     public bool gamePaused = false;
 
+    private CheckpointSystem cpSys;
+
 
     // add onclick listeners to the buttons to cause events
     void Start(){
@@ -29,7 +31,7 @@ public class MenuControl : MonoBehaviour
         }if(optionsBtn != null){
             optionsBtn.onClick.AddListener(() => OpenOptions());
         }if(loadSaveBtn != null){
-            loadSaveBtn.onClick.AddListener(() => OpenSave());
+            loadSaveBtn.onClick.AddListener(() => LoadCheckpoint());
         }if(quitBtn != null){
             quitBtn.onClick.AddListener(() => QuitGame());
         }
@@ -38,6 +40,8 @@ public class MenuControl : MonoBehaviour
             PauseGame();
         else
             UnpauseGame();
+
+        cpSys = GetComponent<CheckpointSystem>();
     }
 
     
@@ -76,8 +80,9 @@ public class MenuControl : MonoBehaviour
     }
 
     // opens the save menu
-    void OpenSave(){
-        Debug.Log("Save / Load menu opens here!");
+    void LoadCheckpoint(){
+        cpSys.LoadCheckpoint();
+        UnpauseGame();
     }
 
     // quits the game

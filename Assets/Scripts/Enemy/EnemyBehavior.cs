@@ -36,7 +36,8 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (gameObject.transform.position.y > posHigherGround)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);        // to bring back to life if using checkpoints
         }
 
         transform.Translate(Vector2.right * speed * Time.deltaTime);
@@ -86,7 +87,8 @@ public class EnemyBehavior : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);         // to bring back to life if using checkpoints
             Debug.Log("hit");
         }
     }

@@ -246,6 +246,12 @@ public class MoveProto_1025 : MonoBehaviour
         }
     }
 
+    public void ResetSnakes(Vector2 pos){
+        targPt = pos;
+        HideSnakes();
+        transform.position = pos;
+    }
+
 
     // checks if one point is close enough to another (X and Y axis)
     private bool InRangeT2D(Transform a, Transform b, float d=0.2f){
