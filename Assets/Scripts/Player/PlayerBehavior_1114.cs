@@ -23,6 +23,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     private SpriteRenderer sprRend;                                 // sprite renderer   
     public bool isSwinging = false;
     bool hasGrabbed = false;
+    bool isStunning = false;
 
     [Header("Health Properties")]
     public int maxHealth = 3;               // maximum possible health of the player
@@ -88,6 +89,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(isStunning);
         Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);                 // target pos
         Vector2 dir = (mousePos - (Vector2)transform.position).normalized;        // where the player should be moving
 
@@ -104,11 +106,12 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         //set aninmator values
         playerAnim.SetBool("currentlySwinging", isSwinging);
         playerAnim.SetBool("isGrabbing", hasGrabbed);
+        playerAnim.SetBool("isPetrifying", isStunning);
 
         // set direction of petrify based on direction
         if (petRay){
-            petRay.localPosition = direction == "right" ? petPos : new Vector3(petPos.x*-1.0f,petPos.y,petPos.z);
-            petRay.localEulerAngles = direction == "right" ? petRot : new Vector3(petRot.x,petRot.y+180,petRot.z);
+            petRay.localPosition = dir.x > 0 ? petPos : new Vector3(petPos.x*-1.0f,petPos.y,petPos.z);
+            petRay.localEulerAngles = dir.x > 0 ? petRot : new Vector3(petRot.x,petRot.y+180,petRot.z);
         }
 
         // right click to reach out --> grab --> devour
@@ -125,7 +128,13 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
         // if the petrify ray is on and an enemy is in range, petrify it
         if (Input.GetKeyDown(KeyCode.Q)){
             Petrify();
+            isStunning = true;
         }
+        else
+        {
+            isStunning = false;
+        }
+        
         
         if(petrifyRayOn){
             Debug.Log(petrifyRayDetect);
@@ -176,6 +185,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     {
         if(canPetrify)
             StartCoroutine(FlashPetrifyRay());
+        
     }
 
     // timer for showing and activating the petrification ray

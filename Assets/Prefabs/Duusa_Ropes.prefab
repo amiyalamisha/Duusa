@@ -422,7 +422,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!60 &7012826412978590925
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1073,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7012826413982882007
 Transform:
   m_ObjectHideFlags: 0
@@ -1369,6 +1369,7 @@ GameObject:
   - component: {fileID: 7012826414166684365}
   - component: {fileID: 7012826414166684359}
   - component: {fileID: 7012826414166684356}
+  - component: {fileID: 1636115574}
   m_Layer: 0
   m_Name: Duusa_Ropes
   m_TagString: Player
@@ -1396,7 +1397,7 @@ Transform:
   - {fileID: 7012826413978079336}
   - {fileID: 7012826414344732010}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7012826414166684361
 SpriteRenderer:
@@ -1512,7 +1513,7 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.42, y: -0.22}
+  m_ConnectedAnchor: {x: -5.3385625, y: -3.9193978}
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
   m_DampingRatio: 0.5
@@ -1534,6 +1535,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   grabbingSnakes: {fileID: 7012826414831522581}
   playerAnim: {fileID: 0}
+  isSwinging: 0
   maxHealth: 3
   curHealth: 3
   healthGraceAmt: 0.6
@@ -1581,6 +1583,26 @@ MonoBehaviour:
   targDist: 0.005
   targFreq: 0.5
   fallGrav: 0.5
+--- !u!95 &1636115574
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7012826414166684364}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8079de45d186d7409091cd1cb764cd9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7012826414167580215
 GameObject:
   m_ObjectHideFlags: 0
