@@ -15,6 +15,7 @@ public class Enemy_920 : MonoBehaviour
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
 
+    private Animator anim;
 
 
     //---- ENEMY PROPERTIES
@@ -58,6 +59,8 @@ public class Enemy_920 : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+
+        anim = GetComponent<Animator>();
 
         // assign the range detectors if available
         Transform pr = transform.Find("PatrolRange");
