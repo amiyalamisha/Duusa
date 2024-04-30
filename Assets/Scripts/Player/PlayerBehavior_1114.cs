@@ -216,11 +216,11 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 
         // otherwise lose health and start grace invulnerability
         curHealth -= dmgAmt;
-
+        /*
         // update GUI
         if(healthGUI !=null)
             healthGUI.UpdateHealth(curHealth);
-
+        */
         // lost all health
         if(curHealth <= 0)
             OnDeath();
