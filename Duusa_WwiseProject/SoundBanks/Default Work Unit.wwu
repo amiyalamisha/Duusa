@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{EC10B2D8-E985-4D91-B6D3-C890E0668BDC}" SchemaVersion="110">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{EC10B2D8-E985-4D91-B6D3-C890E0668BDC}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="SFX" ID="{5AAA4776-39F0-4702-94D6-5F2A1FCE3EFF}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_sfx_devour" ID="{DB9C3317-A69B-4CE2-9013-A05DFAC3FDE3}" WorkUnitID="{E15A6C28-3E90-4423-86EE-A24A4B884086}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{420D4590-A508-4C0A-A5A4-429A5937DB09}" SchemaVersion="110">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{420D4590-A508-4C0A-A5A4-429A5937DB09}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="sfx_devour" ID="{C68C3151-DB89-4848-8ED3-B10CD55B5978}" ShortID="160774770">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C365A950-F249-4B88-BF11-C0C61DC7A98D}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2DEE3115-6870-4487-877F-C8E21093F5ED}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="sfx_devour" ID="{AA37F653-8A67-44F0-A9D5-6381B77DF147}">
+							<Language>SFX</Language>
+							<AudioFile>sfx_devour.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="455782406"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="sfx_devour" ID="{AA37F653-8A67-44F0-A9D5-6381B77DF147}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

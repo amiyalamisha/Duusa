@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo>
+	<Project Name="Duusa_WwiseProject" GUID="{53993937-22CF-4AF9-B6F1-9A6132EA7BDB}" Generator="2022.1.8.8316"/>
+	<CacheRoot>../../../../Duusa_WwiseProject/.cache</CacheRoot>
+	<Platforms>
+		<Platform Name="Mac" GUID="{253F43F0-6806-4BEC-B24B-B2632AFE9313}" BasePlatform="Mac" BasePlatformGUID="{9C6217D5-DD11-4795-87C1-6CE02853C540}" Path="../../../../Duusa_WwiseProject/GeneratedSoundBanks/Mac"/>
+		<Platform Name="Windows" GUID="{6FE30D2B-CB33-41AA-97CF-3E6217F97D35}" BasePlatform="Windows" BasePlatformGUID="{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}" Path="../../../../Duusa_WwiseProject/GeneratedSoundBanks/Windows"/>
+	</Platforms>
+	<Languages>
+		<Language Name="English(US)" Id="684519430" GUID="{29245CCB-49DB-4FD6-84CB-692D0377C847}" Default="true" UseAsStandIn="true"/>
+	</Languages>
+	<FileHash>{AC706013-1E1C-D201-B56C-A02F6E55E620}</FileHash>
+</ProjectInfo>

@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3808034999	Play_sfx_devour			\Default Work Unit\Play_sfx_devour	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	455782406	sfx_devour	C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\.cache\Mac\SFX\sfx_devour_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\sfx_devour		116832
+

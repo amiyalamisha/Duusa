@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{E15A6C28-3E90-4423-86EE-A24A4B884086}" SchemaVersion="110">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{E15A6C28-3E90-4423-86EE-A24A4B884086}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_sfx_devour" ID="{DB9C3317-A69B-4CE2-9013-A05DFAC3FDE3}">
+					<ChildrenList>
+						<Action Name="" ID="{4E61D8B9-37B9-4A4A-899F-B39B5063AD9A}" ShortID="9638102">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_devour" ID="{C68C3151-DB89-4848-8ED3-B10CD55B5978}" WorkUnitID="{420D4590-A508-4C0A-A5A4-429A5937DB09}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
