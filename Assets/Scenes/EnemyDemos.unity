@@ -956,13 +956,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrol_speed: 2
   chase_speed: 3
-  curState: 1
+  isFrozen: 0
+  willShootMedusa: 1
+  currentEnemyState: 0
   patrolPts:
   - {fileID: 159303993}
   - {fileID: 1515799832}
   waitPatrolTime: 2
   patrolMinDist: 0.5
-  isFrozen: 0
   normalColor: {r: 1, g: 0, b: 0, a: 1}
   petrifyColor: {r: 0.5754717, g: 0.54561234, b: 0.54561234, a: 1}
 --- !u!1 &804267471
@@ -1551,6 +1552,63 @@ Transform:
   m_Father: {fileID: 2118402785}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1653075481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653075483}
+  - component: {fileID: 1653075482}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1653075482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653075481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92b67c53c45dc64aaf117d86cb248de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializationSettings: {fileID: 11400000, guid: 9545a286dde518846ad39b81f5c972be, type: 2}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &1653075483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653075481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &2044605400
 LineRenderer:
   serializedVersion: 2
@@ -1896,14 +1954,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2259361163877168418
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259361163877168419}
-  m_Enabled: 1
 --- !u!1 &2259361163877168419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,7 +1964,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2259361163877168607}
   - component: {fileID: 2259361163877168416}
-  - component: {fileID: 2259361163877168418}
+  - component: {fileID: 2259361163877168609}
+  - component: {fileID: 2259361163877168608}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1937,6 +1988,42 @@ Transform:
   m_Father: {fileID: 2259361164319443583}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2259361163877168608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259361163877168419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7995b1ba3e7e5ee41a483f27f9c72d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultListener: 1
+  listenerId: 0
+--- !u!114 &2259361163877168609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259361163877168419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f92bfdc3968895b48b272b0ff757fff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 0
+  isStaticObject: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
 --- !u!212 &2259361164319443520
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2086,6 +2173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceeb0eef5064e48f49f393813a8f37c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  edges: []
+  direction: right
   cam: {fileID: 2259361163877168416}
   movementSnakes: {fileID: 2259361165708542986}
   grabbingSnakes: {fileID: 2044605400}
