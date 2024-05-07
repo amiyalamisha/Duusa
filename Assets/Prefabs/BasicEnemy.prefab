@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b54d263060c343b0ae54750ba6c3eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletObj: {fileID: 143222247527511909, guid: 3a8e67808d5da486c9d5f368db6773a3, type: 3}
+  bulletObj: {fileID: 6552553153280594286, guid: 84074e75aab6af94eb9e2b1244569e6c, type: 3}
   bulletSpeed: 6
   bulletTimeout: 0.5
   canFire: 1
