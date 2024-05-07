@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 4583777975310609841}
   - component: {fileID: 4583777975310609804}
   - component: {fileID: 8923855444184504083}
-  - component: {fileID: 553040999474662232}
+  - component: {fileID: 1026956193}
   m_Layer: 0
   m_Name: EnemyTest2
   m_TagString: enemy
@@ -438,7 +438,7 @@ Transform:
   - {fileID: 4583777974410187282}
   - {fileID: 4583777974415347735}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4583777975310609806
 SpriteRenderer:
@@ -480,10 +480,10 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 1706479340, guid: fe77c4d8faad8584789d15ffba5cc88a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -555,7 +555,7 @@ MonoBehaviour:
   chase_speed: 4
   isFrozen: 0
   willShootMedusa: 1
-  currentEnemyState: 0
+  currentEnemyState: 1
   patrolPts:
   - {fileID: 0}
   - {fileID: 0}
@@ -563,7 +563,7 @@ MonoBehaviour:
   patrolMinDist: 0.5
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   petrifyColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
---- !u!95 &553040999474662232
+--- !u!95 &1026956193
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -573,7 +573,7 @@ Animator:
   m_GameObject: {fileID: 4583777975310609840}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: da49cd1462b224f419b668f374d9861e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 468401b302fb5b544a076d15a2f66ee0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
