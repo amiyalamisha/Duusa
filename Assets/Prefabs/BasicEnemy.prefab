@@ -317,7 +317,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9c5f71f7f4622ec4d8ee020c1de728d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -335,8 +335,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1963635203
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Positions:
   - {x: 0.5, y: 1, z: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 8923855444184504083}
   - component: {fileID: 1026956193}
   m_Layer: 0
-  m_Name: EnemyTest2
+  m_Name: BasicEnemy
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,8 +478,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1963635203
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 1706479340, guid: fe77c4d8faad8584789d15ffba5cc88a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

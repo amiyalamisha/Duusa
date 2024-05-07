@@ -36,6 +36,8 @@ public class SnakeRope : MonoBehaviour
         for(int i=0;i<num_links;i++){
             GameObject link = Instantiate(snakeBodyPrefab, transform);
             HingeJoint2D joint = link.GetComponent<HingeJoint2D>();
+            SpriteRenderer sprRendPrefab = snakeBodyPrefab.GetComponent<SpriteRenderer>();
+            sprRendPrefab.sortingLayerName = "Snakes";
             joint.connectedBody = previousRB;
             previousRB = link.GetComponent<Rigidbody2D>();
 
@@ -44,6 +46,8 @@ public class SnakeRope : MonoBehaviour
 
         // make the head for grappling
         HingeJoint2D headJoint = snakeHead.GetComponent<HingeJoint2D>();
+        //SpriteRenderer sprRend = snakeHead.GetComponent<SpriteRenderer>();
+        //sprRend.sortingLayerName = "Snakes";
         headJoint.autoConfigureConnectedAnchor = false;
         headJoint.connectedBody = previousRB;
         headJoint.anchor = Vector2.zero;
