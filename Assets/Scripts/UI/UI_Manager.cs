@@ -14,19 +14,25 @@ public class UI_Manager : MonoBehaviour
     }
 
     public GameObject livesIcon;                   // the icon to show for health
+    private Sprite livesSprite;
     private List<Sprite> livesList;         // running list of the life bar icons - doesn't destroy just unenables when health is lost
 
     
     void Start()
     {
+        livesSprite = livesIcon.GetComponent<Sprite>();
+
         livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health1"));
         livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health2"));
         livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health3"));
     }
 
-    // idk make fuction back to playercode
-    void Update()
-    {
-        
+    public void UpdateHealthUI(int currentHealth)
+    {/*
+        switch (currentHealth)
+        {
+            case 1: 
+                livesSprite = 
+        }*/
     }
 }
