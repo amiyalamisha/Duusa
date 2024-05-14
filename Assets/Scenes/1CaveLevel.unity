@@ -5017,7 +5017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed614baeb9ef2d444893346454767935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesIcon: {fileID: 517964305}
+  livesIcon: {fileID: 517964307}
 --- !u!1 &260760523
 GameObject:
   m_ObjectHideFlags: 0
