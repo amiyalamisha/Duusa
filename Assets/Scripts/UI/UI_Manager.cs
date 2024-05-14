@@ -21,7 +21,7 @@ public class UI_Manager : MonoBehaviour
     
     void Start()
     {
-        livesSprite = livesIcon.GetComponent<Sprite>();
+        livesSprite = livesIcon.GetComponent<Image>().GetComponent<Sprite>();
 
         livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health1"));
         livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health2"));
@@ -29,12 +29,16 @@ public class UI_Manager : MonoBehaviour
     }
 
     public void UpdateHealthUI(int currentHealth)
-    {/*
+    {
         switch (currentHealth)
         {
-            case 1: 
-                livesSprite = 
-        }*/
+            case 1:
+                livesSprite = livesList[0]; break;
+            case 2:
+                livesSprite = livesList[1]; break;
+            case 3:
+                livesSprite = livesList[2]; break;
+        }
     }
 
     public void ChangeScene()

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7012826412701790292}
   - component: {fileID: 7012826412701790293}
   - component: {fileID: 7012826412701790290}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,8 +119,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 7012826412876449720}
   - component: {fileID: 7012826412876449721}
   - component: {fileID: 7012826412876449718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Snake1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 7012826412958575250}
   - component: {fileID: 7012826412958575253}
   - component: {fileID: 7012826412958575251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 7012826412978590922}
   - component: {fileID: 7012826412978590925}
   - component: {fileID: 7012826412978590924}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PetrifyRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,9 +409,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1963635203
+  m_SortingLayer: 5
+  m_SortingOrder: 5
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.57445264, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -478,7 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7012826413307845101}
   - component: {fileID: 7012826413307845098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,8 +538,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.04214927, g: 0.9716981, b: 0, a: 1}
@@ -562,7 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7012826413615574594}
   - component: {fileID: 7012826413615574595}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,8 +622,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.04214927, g: 0.9716981, b: 0, a: 1}
@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 7012826413680382557}
   - component: {fileID: 7012826413680382555}
   - component: {fileID: 7012826413680382554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 7012826413776234576}
   - component: {fileID: 7012826413776234577}
   - component: {fileID: 7012826413776234543}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -833,8 +833,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -907,7 +907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7012826413964066414}
   - component: {fileID: 7012826413964066415}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,8 +967,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.04214927, g: 0.9716981, b: 0, a: 1}
@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 7012826413978079336}
   - component: {fileID: 7012826413978079337}
   - component: {fileID: 7012826413978079334}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Snake2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,13 +1067,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7012826413982882007}
   - component: {fileID: 7012826413982882006}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7012826413982882007
 Transform:
   m_ObjectHideFlags: 0
@@ -1129,7 +1129,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: e0a8d466ecc3a45b3938182669902faa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1151,13 +1151,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7012826414050637919}
   - component: {fileID: 7012826414050637918}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TargetLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7012826414050637919
 Transform:
   m_ObjectHideFlags: 0
@@ -1287,7 +1287,7 @@ GameObject:
   - component: {fileID: 7012826414095545673}
   - component: {fileID: 7012826414095545671}
   - component: {fileID: 7012826414095545670}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1370,7 +1370,7 @@ GameObject:
   - component: {fileID: 7012826414166684359}
   - component: {fileID: 7012826414166684356}
   - component: {fileID: 1636115574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Duusa_Ropes
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1437,8 +1437,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1963635203
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 2eb1f0a10fa76054a9876934338df8e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1540,6 +1540,7 @@ MonoBehaviour:
   curHealth: 3
   healthGraceAmt: 0.6
   canHurt: 1
+  hurtColor: {r: 0.735849, g: 0.3100747, b: 0.3100747, a: 0}
   healthGUI: {fileID: 0}
   petrifyRayOnTime: 0.3
   petrifyRayCooldown: 2
@@ -1614,7 +1615,7 @@ GameObject:
   - component: {fileID: 7012826414167580212}
   - component: {fileID: 7012826414167580210}
   - component: {fileID: 7012826414167580213}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1693,7 +1694,7 @@ GameObject:
   - component: {fileID: 7012826414195778760}
   - component: {fileID: 7012826414195778761}
   - component: {fileID: 7012826414195778759}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,8 +1801,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1865362281
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -1875,7 +1876,7 @@ GameObject:
   - component: {fileID: 7012826414324998814}
   - component: {fileID: 7012826414324998812}
   - component: {fileID: 7012826414324998815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1954,7 @@ GameObject:
   - component: {fileID: 7012826414344732010}
   - component: {fileID: 7012826414344732011}
   - component: {fileID: 7012826414344732008}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Snake3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2029,7 +2030,7 @@ GameObject:
   - component: {fileID: 7012826414831522579}
   - component: {fileID: 7012826414831522581}
   - component: {fileID: 7012826414831522578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrabbingSnakes
   m_TagString: grabSnake
   m_Icon: {fileID: 0}
@@ -2072,7 +2073,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1b3cd874bb6c747ccb3c0fe5c92d8ff9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2090,9 +2091,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingLayerID: 1963635203
+  m_SortingLayer: 5
+  m_SortingOrder: 5
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -2187,7 +2188,7 @@ GameObject:
   - component: {fileID: 8213327269957816281}
   - component: {fileID: 904395735059930791}
   - component: {fileID: 2507030587763399967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SnakeEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
