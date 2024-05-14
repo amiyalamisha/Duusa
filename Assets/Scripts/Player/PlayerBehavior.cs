@@ -77,9 +77,13 @@ public class PlayerBehavior : MonoBehaviour
     private List<Vector2> points = new List<Vector2>();     // all working movement snakes
     public List<Vector2> edges = new List<Vector2>();
 
+    private Dialogue myDialogue;
+
     // Start is called before the first frame update
     void Start()
     {
+        myDialogue = GameObject.Find("SampleDialogue").GetComponent<Dialogue>();
+
         playerAnim = GetComponent<Animator>();
         sprRend = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -91,6 +95,7 @@ public class PlayerBehavior : MonoBehaviour
         movementSnakes.enabled = false;
         grabbingSnakes.enabled = false;
 
+        // petrification setup
         // search for the petrification ray child object if available
         Transform petRayRight = transform.Find("PetrifyRayRight");
         Transform petRayLeft = transform.Find("PetrifyRayLeft");
@@ -109,7 +114,7 @@ public class PlayerBehavior : MonoBehaviour
             petrifyRaySprR.enabled = false;   // turn off the sprite renderer at the start
         }
 
-        // start with max health
+        // health set up
         curHealth = maxHealth;
 
         // if the health GUI is added, set the max and current amounts
@@ -197,6 +202,11 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Detatch();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            myDialogue.TriggerDialogue();
         }
 
         // if the petrify ray is on and an enemy is in range, petrify it
