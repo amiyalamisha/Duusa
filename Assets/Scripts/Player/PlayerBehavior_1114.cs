@@ -251,7 +251,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     {
         if (collision.gameObject.tag == "Exit")
         {
-            SceneManager.LoadScene("2CaveLevel");
+            UI_Manager.instance.ChangeScene();
         }
     }
 }
