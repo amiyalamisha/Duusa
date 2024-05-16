@@ -10,6 +10,7 @@ public class Enemy_920 : MonoBehaviour
     private Transform player;                     // player object
     private DetectionRange lookRange;           // object for detecting while patroling (triangle)
     private DetectionRange shootRange;           // object for detecting while shooting (circle)
+    [SerializeField] DetectionRange dr;
     private EnemyProjectileAttack projAtt;       // projectile attack script
     private PlayerBehavior_1114 playerBehavior;
 
@@ -63,6 +64,7 @@ public class Enemy_920 : MonoBehaviour
 
         anim = GetComponent<Animator>();
         enemyBoxColl = GetComponent<BoxCollider2D>();
+        //dr = GetComponent<>();
 
         // assign the range detectors if available
         Transform pr = transform.Find("PatrolRange");
@@ -99,6 +101,10 @@ public class Enemy_920 : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
+        //Debug.Log(dr.medusaInSight);
+        anim.SetBool("isAlerted", dr.medusaInSight);
+        //anim.SetBool("isShooting", willShootMedusa);
+        //anim.SetFloat("speed", );
 ;        // controls the AI behvaior (see the FSM diagram)
         switch(currentEnemyState){
             case AIState.Idle:
@@ -118,7 +124,7 @@ public class Enemy_920 : MonoBehaviour
                 else                                        // otherwise be idle
                     currentEnemyState = AIState.Idle;
 
-                // if medusa in range, chase her
+                // if medusa in range, chase her //start of alert animation
                 if(lookRange.medusaInSight)
                     currentEnemyState = AIState.Chase;
                 break;
