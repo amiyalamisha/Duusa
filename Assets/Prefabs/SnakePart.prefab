@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.07342471, g: 0.4716981, b: 0.07955202, a: 1}
+  m_Color: {r: 0.61960787, g: 1, b: 0.6117647, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -197,9 +197,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.07055696, g: 0.7830189, b: 0.04801533, a: 1}
-      key1: {r: 0.07055696, g: 0.7830189, b: 0.04801533, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.16263612, g: 1, b: 0.13836467, a: 1}
+      key1: {r: 0.6206975, g: 1, b: 0.61006284, a: 1}
+      key2: {r: 0.16263612, g: 1, b: 0.13836467, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -207,7 +207,7 @@ LineRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0

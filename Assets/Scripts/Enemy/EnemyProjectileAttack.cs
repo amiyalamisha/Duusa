@@ -19,6 +19,7 @@ public class EnemyProjectileAttack : MonoBehaviour
         // make a bullet
         GameObject b = Instantiate(bulletObj);
         b.transform.position = transform.position;
+        //b.transform.rotation = rotateto
         // b.transform.LookAt(target);
 
         // fire with a force 

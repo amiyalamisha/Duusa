@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
+    public Animator healthAnimator;
+
     public static UI_Manager instance;
 
     private void Awake()
@@ -22,28 +24,32 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         livesSprite = livesIcon.GetComponent<Sprite>();
-
-        livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health1"));
-        livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health2"));
-        livesList.Append<Sprite>(Resources.Load<Sprite>("UI/health3"));
     }
 
     public void UpdateHealthUI(int currentHealth)
     {
-        switch (currentHealth)
+        /*switch (currentHealth)
         {
+            
             case 1:
                 livesSprite = livesList[0]; break;
             case 2:
                 livesSprite = livesList[1]; break;
             case 3:
                 livesSprite = livesList[2]; break;
-        }
-        Debug.Log(livesSprite);
+        }*/
+
+        healthAnimator.SetInteger("animHealth", currentHealth);
+
     }
 
     public void ChangeScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);       // changing to next scene in squeance
+    }
+
+    public void CharacterTalking()
+    {
+
     }
 }

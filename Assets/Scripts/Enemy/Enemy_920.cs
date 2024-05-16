@@ -14,6 +14,7 @@ public class Enemy_920 : MonoBehaviour
     private PlayerBehavior_1114 playerBehavior;
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
+    private BoxCollider2D enemyBoxColl;           // box collider ref
 
     private Animator anim;
 
@@ -61,6 +62,7 @@ public class Enemy_920 : MonoBehaviour
     void Start(){
 
         anim = GetComponent<Animator>();
+        enemyBoxColl = GetComponent<BoxCollider2D>();
 
         // assign the range detectors if available
         Transform pr = transform.Find("PatrolRange");
@@ -97,7 +99,7 @@ public class Enemy_920 : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        // controls the AI behvaior (see the FSM diagram)
+;        // controls the AI behvaior (see the FSM diagram)
         switch(currentEnemyState){
             case AIState.Idle:
                 // doesn't matter, don't do nothing lol
@@ -278,6 +280,7 @@ public class Enemy_920 : MonoBehaviour
     void SetDirection(int dir){
         if(dir == -1 && facingRight){
             facingRight = false;
+            //enemyBoxColl.transform.po
             transform.eulerAngles = new Vector3(0,180,0);
             // Debug.Log("to the left");
         }else if(dir != -1 && !facingRight){
