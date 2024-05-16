@@ -551,6 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6d401decb6e4317801ececbd9c3c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dr: {fileID: 4583777975228301474}
   patrol_speed: 2
   chase_speed: 4
   isFrozen: 0

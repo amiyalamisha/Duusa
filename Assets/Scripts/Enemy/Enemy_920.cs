@@ -103,24 +103,27 @@ public class Enemy_920 : MonoBehaviour
     void Update(){
         //Debug.Log(dr.medusaInSight);
         anim.SetBool("isAlerted", dr.medusaInSight);
-        //anim.SetBool("isShooting", willShootMedusa);
-        //anim.SetFloat("speed", );
+        anim.SetBool("isShooting", willShootMedusa);
+        
 ;        // controls the AI behvaior (see the FSM diagram)
         switch(currentEnemyState){
             case AIState.Idle:
                 // doesn't matter, don't do nothing lol
                 // maybe animation?
-
+                anim.SetFloat("speed", 0);
                 // if medusa in range, chase her
-                if(lookRange.medusaInSight)
+                if (lookRange.medusaInSight)
                     currentEnemyState = AIState.Chase;
 
                 break;
 
 
             case AIState.Patrol:
-                if(patrolPts.Count > 0)                     // if there are patrol points, go to them
+                if (patrolPts.Count > 0) 
+                {                     // if there are patrol points, go to them
                     GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
+                    anim.SetFloat("speed", patrol_speed);
+                }
                 else                                        // otherwise be idle
                     currentEnemyState = AIState.Idle;
 
@@ -135,6 +138,7 @@ public class Enemy_920 : MonoBehaviour
                 // if not in range of Medusa, the move towards her
                 if(shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
                     GoToTarget(shootRange.target, chase_speed, 3.0f, true);
+                    anim.SetFloat("speed", patrol_speed);
                 }
                 // if lost the target, go back to patrol
                 else if(shootRange.target == null){
