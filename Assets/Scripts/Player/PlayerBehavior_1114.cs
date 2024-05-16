@@ -30,8 +30,8 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     public int curHealth = 3;               // current health of the player
     public float healthGraceAmt = 0.6f;     // invulnerability time before can take damage again
     public bool canHurt = true;             // flag for whether the player is vulnerable to attacks
-    //private Color origColor;                // stores the original color to revert back to
-    //public Color hurtColor;                 // color for when player is hurt and grace period is activated
+    private Color origColor;                // stores the original color to revert back to
+    public Color hurtColor;                 // color for when player is hurt and grace period is activated
     public HealthUI healthGUI;              // GUI for the health 
 
     // petrification properties
@@ -61,7 +61,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 
         playerAnim = GetComponent<Animator>();
         sprRend = GetComponent<SpriteRenderer>();
-        //origColor = sprRend.color;
+        origColor = sprRend.color;
         rb = GetComponent<Rigidbody2D>();
         edgeCollider = grabbingSnakes.GetComponent<EdgeCollider2D>();
 
@@ -216,11 +216,9 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
 
         // otherwise lose health and start grace invulnerability
         curHealth -= dmgAmt;
-        /*
+        
         // update GUI
-        if(healthGUI !=null)
-            healthGUI.UpdateHealth(curHealth);
-        */
+        UI_Manager.instance.UpdateHealthUI(curHealth);
         // lost all health
         if(curHealth <= 0)
             OnDeath();
@@ -233,12 +231,12 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     IEnumerator HurtGrace(){
         // grace on
         canHurt = false;
-        //sprRend.color = hurtColor;
+        sprRend.color = hurtColor;
 
         yield return new WaitForSeconds(healthGraceAmt);  
 
         // grace off
-        //sprRend.color = origColor;
+        sprRend.color = origColor;
         canHurt = true;
     }
 
@@ -251,7 +249,7 @@ public class PlayerBehavior_1114 : PlayerBehavior_Abstract
     {
         if (collision.gameObject.tag == "Exit")
         {
-            SceneManager.LoadScene("2CaveLevel");
+            UI_Manager.instance.ChangeScene();
         }
     }
 }

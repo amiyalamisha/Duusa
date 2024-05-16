@@ -36,6 +36,8 @@ public class SnakeRope : MonoBehaviour
         for(int i=0;i<num_links;i++){
             GameObject link = Instantiate(snakeBodyPrefab, transform);
             HingeJoint2D joint = link.GetComponent<HingeJoint2D>();
+            SpriteRenderer sprRendPrefab = snakeBodyPrefab.GetComponent<SpriteRenderer>();      // renderer for spwaned in extra snake body joints
+            sprRendPrefab.sortingLayerName = "Snakes";                                          // need to specify the sorting layer + set material to non-default shader to make sure lines are not behind the background
             joint.connectedBody = previousRB;
             previousRB = link.GetComponent<Rigidbody2D>();
 

@@ -9,17 +9,20 @@ TagManager:
   - enemyBack
   - grabSnake
   - cameraLock
+  - Exit
+  - Petrify
+  - snakeBody
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - Block
   - EnemyGround
-  - 
-  - 
+  - Background
+  - Player
   - 
   - 
   - 
@@ -43,12 +46,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Snakes
-    uniqueID: 2429605015
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 1987388787
+    locked: 0
+  - name: platforms
+    uniqueID: 3107157931
+    locked: 0
   - name: UI
     uniqueID: 1435602845
+    locked: 0
+  - name: Snakes
+    uniqueID: 2429605015
+    locked: 0
+  - name: player
+    uniqueID: 1963635203
     locked: 0

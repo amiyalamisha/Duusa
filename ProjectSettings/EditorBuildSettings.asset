@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Movement_Prototypes/MoveProto_1025.unity
     guid: fbef7b79b8c694e5b96f5f9243ebeb80
   - enabled: 1
+    path: Assets/Scenes/0SplashScreen.unity
+    guid: 6504a5fb6b36ea1498bb11e3709b5798
+  - enabled: 1
     path: Assets/Scenes/1CaveLevel.unity
     guid: 13028ba5905896148b6ba67a0412e26d
   - enabled: 1

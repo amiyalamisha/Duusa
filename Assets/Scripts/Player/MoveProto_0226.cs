@@ -10,7 +10,9 @@ public class MoveProto_0226 : MonoBehaviour
     private Rigidbody2D rb;                                         // rigidbody physics collider   
     private SpriteRenderer sprRend;                                 // sprite renderer
     private SpringJoint2D spring;                                   // spring joint 2d for moving to the target position
+    private BoxCollider2D boxCollider;                              // character box collider
     private Vector2 targPt;                                         // target position the player will move to
+    [SerializeField] private Vector2 orgBoxColl;                                     // original size for player box collieder
     
     // global script
     private MenuControl mainMenu;                                   // menu object of the game
@@ -63,6 +65,8 @@ public class MoveProto_0226 : MonoBehaviour
         playerBehavior = transform.GetComponent<PlayerBehavior_Abstract>();
         sprRend = transform.GetComponent<SpriteRenderer>();
         spring = transform.GetComponent<SpringJoint2D>();
+        boxCollider = transform.GetComponent<BoxCollider2D>();
+        orgBoxColl = new Vector2(0.65f, 1.79f);
         targPt = transform.position;
 
         if(targetSpr)
@@ -103,6 +107,7 @@ public class MoveProto_0226 : MonoBehaviour
             // set the target position to move to if valid and extend snakes to nearby contact point
             if(Input.GetMouseButtonDown(0) && togSnakes && canExtend){
                 PlayerBehavior_1114.instance.isSwinging = true;
+                boxCollider.size = new Vector2(0.65f, 1.25f);
                 targPt = maxPt;
                 permaContactPt = new Vector2(contactPt.point.x,contactPt.point.y);
                 SetSnakes(permaContactPt);
@@ -127,6 +132,7 @@ public class MoveProto_0226 : MonoBehaviour
         else
         {
             PlayerBehavior_1114.instance.isSwinging = false;
+            boxCollider.size = orgBoxColl;
         }
 
         // toggle whether medusa is using her grapple snakes or not
