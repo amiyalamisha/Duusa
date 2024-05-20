@@ -16,6 +16,7 @@ public class Enemy_920 : MonoBehaviour
 
     private SpriteRenderer sprRend;               // sprite rendering of the enemy (for use with petrification coloring)
     private BoxCollider2D enemyBoxColl;           // box collider ref
+    [SerializeField] private Vector2 orgBoxColl;  // original offset for enemy box collieder
 
     private Animator anim;
 
@@ -64,6 +65,7 @@ public class Enemy_920 : MonoBehaviour
 
         anim = GetComponent<Animator>();
         enemyBoxColl = GetComponent<BoxCollider2D>();
+        orgBoxColl = enemyBoxColl.offset;                   // x = -0.303, y = -0.386
         //dr = GetComponent<>();
 
         // assign the range detectors if available
@@ -104,12 +106,13 @@ public class Enemy_920 : MonoBehaviour
         //Debug.Log(dr.medusaInSight);
         anim.SetBool("isAlerted", dr.medusaInSight);
         anim.SetBool("isShooting", willShootMedusa);
-        
-;        // controls the AI behvaior (see the FSM diagram)
+        anim.SetBool("isPetrified", isFrozen);
+
+        ;        // controls the AI behvaior (see the FSM diagram)
         switch(currentEnemyState){
             case AIState.Idle:
                 // doesn't matter, don't do nothing lol
-                // maybe animation?
+                enemyBoxColl.offset = new Vector2(0, -0.18f);
                 anim.SetFloat("speed", 0);
                 // if medusa in range, chase her
                 if (lookRange.medusaInSight)
@@ -123,6 +126,7 @@ public class Enemy_920 : MonoBehaviour
                 {                     // if there are patrol points, go to them
                     GoToTarget(patrolPts[patrolInd], patrol_speed, patrolMinDist);
                     anim.SetFloat("speed", patrol_speed);
+                    enemyBoxColl.offset = new Vector2(0, -0.18f);
                 }
                 else                                        // otherwise be idle
                     currentEnemyState = AIState.Idle;
@@ -139,6 +143,7 @@ public class Enemy_920 : MonoBehaviour
                 if(shootRange.target != null && !InRangeX(transform, shootRange.target, 3.0f)){
                     GoToTarget(shootRange.target, chase_speed, 3.0f, true);
                     anim.SetFloat("speed", patrol_speed);
+                    enemyBoxColl.offset = new Vector2(0, -0.18f);
                 }
                 // if lost the target, go back to patrol
                 else if(shootRange.target == null){
@@ -162,7 +167,7 @@ public class Enemy_920 : MonoBehaviour
                 // if not in range of Medusa, switch to chasing her
                 if(shootRange.target != null && InRangeX(transform, shootRange.target, 3.0f)){
                     if(projAtt != null && projAtt.canFire){
-                        // Debug.Log("fire!");
+                        enemyBoxColl.offset = orgBoxColl;
                         projAtt.FireBullet(shootRange.target);
                     }
                 }
@@ -183,9 +188,10 @@ public class Enemy_920 : MonoBehaviour
 
                 // freeze and change colors to petrification if not already
                 // redundant, but just in case Petrify() failed, or the curState was changed elsewhere
-                if(!isFrozen){
+                if (!isFrozen){
                     sprRend.color = petrifyColor;
                     isFrozen = true;
+                    enemyBoxColl.offset = new Vector2(0, -0.18f);
                 }
 
                 break;

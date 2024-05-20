@@ -57,9 +57,11 @@ public class Enemy_Perseus : MonoBehaviour
         anim = GetComponent<Animator>();
         enemyBoxColl = GetComponent<BoxCollider2D>();
 
+        Transform pr = transform.Find("PatrolRange");
         if (pr != null)
         {
             lookRange = pr.GetComponent<DetectionRange>();
+            //patrolArea = pr.GetComponent<LineRenderer>();
         }
 
         // assign the range detector if available

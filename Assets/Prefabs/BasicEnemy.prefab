@@ -438,7 +438,7 @@ Transform:
   - {fileID: 4583777974410187282}
   - {fileID: 4583777974415347735}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4583777975310609806
 SpriteRenderer:
@@ -552,6 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dr: {fileID: 4583777975228301474}
+  orgBoxColl: {x: 0, y: 0}
   patrol_speed: 2
   chase_speed: 4
   isFrozen: 0
