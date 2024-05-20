@@ -12,6 +12,7 @@ TagManager:
   - Exit
   - Petrify
   - snakeBody
+  - DialogueWord
   layers:
   - Default
   - TransparentFX
@@ -55,12 +56,12 @@ TagManager:
   - name: platforms
     uniqueID: 3107157931
     locked: 0
-  - name: UI
-    uniqueID: 1435602845
-    locked: 0
   - name: Snakes
     uniqueID: 2429605015
     locked: 0
   - name: player
     uniqueID: 1963635203
+    locked: 0
+  - name: UI
+    uniqueID: 1435602845
     locked: 0

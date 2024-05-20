@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 1264638748}
   - component: {fileID: 1264638747}
   m_Layer: 10
-  m_Name: Character1
+  m_Name: Duusa
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 1863408126}
   - component: {fileID: 1863408125}
   m_Layer: 10
-  m_Name: Character2
+  m_Name: Stheno
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

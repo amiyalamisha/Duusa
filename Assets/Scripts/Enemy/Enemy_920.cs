@@ -48,8 +48,9 @@ public class Enemy_920 : MonoBehaviour
     public float waitPatrolTime = 2.0f;     // how long to wait at the patrol point before going to the next
     public float patrolMinDist = 0.5f;      // minimum distance needed to reach a patrol point
 
-    private LineRenderer patrolArea;         // detection area for patroling (for debug visuals)
-    private SpriteRenderer shootArea;        // detection area for shooting (for debug visuals)
+    private LineRenderer patrolArea;        // detection area for patroling (for debug visuals)
+    private SpriteRenderer shootArea;       // detection area for shooting (for debug visuals)
+    public bool showPatrolArea;             // toggle for showing patrol line renderers
 
 
     // NOTE: Change these to sprites instead of colors
@@ -217,7 +218,8 @@ public class Enemy_920 : MonoBehaviour
 
         // render areas for debugging
         if(debugView && patrolArea){
-            patrolArea.enabled = currentEnemyState == AIState.Patrol || currentEnemyState == AIState.Idle;
+            if(showPatrolArea)
+                patrolArea.enabled = currentEnemyState == AIState.Patrol || currentEnemyState == AIState.Idle;
         }
         if(debugView && shootArea){
             shootArea.enabled = currentEnemyState == AIState.Chase || currentEnemyState == AIState.Shoot;

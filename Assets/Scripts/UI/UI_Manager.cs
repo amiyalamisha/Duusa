@@ -4,10 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 public class UI_Manager : MonoBehaviour
 {
     public Animator healthAnimator;
+    public Dialogue sceneDialogue;
+    public AudioSource music;
 
     public static UI_Manager instance;
 
@@ -23,24 +26,27 @@ public class UI_Manager : MonoBehaviour
     
     void Start()
     {
-        livesSprite = livesIcon.GetComponent<Sprite>();
+        if(livesIcon != null)
+        {
+            livesSprite = livesIcon.GetComponent<Sprite>();
 
+        }
+        
+        //if (!music.isPlaying)
+        //{
+            //music.Play();
+        //}
+        
+        /*
+        if (SceneManager.GetActiveScene().name == "1CaveLevelDialogue")
+        {
+            sceneDialogue.TriggerDialogue();
+        }*/
     }
 
     public void UpdateHealthUI(int currentHealth)
     {
-        /*switch (currentHealth)
-        {
-            
-            case 1:
-                livesSprite = livesList[0]; break;
-            case 2:
-                livesSprite = livesList[1]; break;
-            case 3:
-                livesSprite = livesList[2]; break;
-        }*/
-
-        healthAnimator.SetInteger("animHealth", currentHealth);
+        healthAnimator.SetInteger("animHealth", currentHealth);         // changes health ui
 
     }
 
