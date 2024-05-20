@@ -24,6 +24,7 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         livesSprite = livesIcon.GetComponent<Sprite>();
+
     }
 
     public void UpdateHealthUI(int currentHealth)
@@ -48,8 +49,4 @@ public class UI_Manager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);       // changing to next scene in squeance
     }
 
-    public void CharacterTalking()
-    {
-
-    }
 }

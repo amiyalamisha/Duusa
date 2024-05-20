@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="110">
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Virtual Acoustics\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Triggers\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Switches\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\States\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Queries\Factory Queries.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Queries\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Presets\Factory Spatial Audio.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Presets\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Modulators\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Mixing Sessions\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Metadata\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Events\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Effects\Factory Effects.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Effects\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Duusa_WwiseProject.wproj" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Conversion Settings\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Control Surface Sessions\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Audio Devices\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Attenuations\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1715036112" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Virtual Acoustics\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Triggers\Default Work Unit.wwu" DateLow="1715890823" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Switches\Default Work Unit.wwu" DateLow="1715890823" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\States\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Queries\Factory Queries.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Queries\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Presets\Factory Spatial Audio.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Presets\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Modulators\Default Work Unit.wwu" DateLow="1715890823" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Mixing Sessions\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Metadata\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Interactive Music Hierarchy\music.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Events\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Effects\Factory Effects.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Effects\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Duusa_WwiseProject.wproj" DateLow="1715890823" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Duusa_WwiseProject.heeya.wsettings" DateLow="1715890823" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Conversion Settings\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Control Surface Sessions\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Audio Devices\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Attenuations\Default Work Unit.wwu" DateLow="1715890827" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\heeya\Documents\Development\Duusa\Duusa_WwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1715890826" DateHigh="0"/>
 </ValidationCache>
