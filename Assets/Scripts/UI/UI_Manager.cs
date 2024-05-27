@@ -19,11 +19,16 @@ public class UI_Manager : MonoBehaviour
         instance = this;
     }
 
+    [Header("Prologue Properties")]
+    private Camera mainCam;
+    private float camSpeed = 2f;
+    private Image [] comicList = new Image[4];
+
+    [Header("Health UI Properties")]
     public Image livesIcon;                   // the icon to show for health
     private Sprite livesSprite;
-    private List<Sprite> livesList;         // running list of the life bar icons - doesn't destroy just unenables when health is lost
 
-    
+
     void Start()
     {
         if(livesIcon != null)
@@ -31,17 +36,37 @@ public class UI_Manager : MonoBehaviour
             livesSprite = livesIcon.GetComponent<Sprite>();
 
         }
-        
+
         //if (!music.isPlaying)
         //{
-            //music.Play();
+        //music.Play();
         //}
-        
+
         /*
+        if (SceneManager.GetActiveScene().name == "0.5Prologue")
+        {
+            mainCam = FindObjectOfType<Camera>();
+
+            Transform canvas = GameObject.Find("Canvas").transform;
+            comicList[0] = canvas.GetChild(0).GetComponent<Image>();
+            comicList[1] = canvas.GetChild(1).GetComponent<Image>();
+            comicList[2] = canvas.GetChild(2).GetComponent<Image>();
+            comicList[3] = canvas.GetChild(3).GetComponent<Image>();
+
+            PlayPrologue();
+        }*/
+    }
+
+    void Update()
+    {
         if (SceneManager.GetActiveScene().name == "1CaveLevelDialogue")
         {
-            sceneDialogue.TriggerDialogue();
-        }*/
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("dialogue");
+                sceneDialogue.TriggerDialogue();
+            }
+        }
     }
 
     public void UpdateHealthUI(int currentHealth)
@@ -54,5 +79,24 @@ public class UI_Manager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);       // changing to next scene in squeance
     }
+    /*
+    public void PlayPrologue()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            Debug.Log(comicList[i].transform.position);
+            StartCoroutine(SwapComicCamFocus(i));
+        }
 
+    }
+
+    IEnumerator SwapComicCamFocus(int comicNum)
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        Vector3 pos = Vector2.Lerp(mainCam.transform.position, comicList[comicNum].transform.position, camSpeed * Time.deltaTime);
+        mainCam.transform.position = pos;
+        Debug.Log(mainCam.transform.position);
+    }
+    */
 }

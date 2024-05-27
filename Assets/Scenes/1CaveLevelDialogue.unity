@@ -5406,7 +5406,7 @@ PrefabInstance:
       objectReference: {fileID: 260760525}
     - target: {fileID: 7012826414166684359, guid: 0519c4558b1bf07489f9df348f932bcb, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7012826414166684359, guid: 0519c4558b1bf07489f9df348f932bcb, type: 3}
       propertyPath: playerAnim
@@ -10455,7 +10455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8154604595459076101, guid: 93e29f932c357b443b4b1edbfbf047e6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8154604595459076104, guid: 93e29f932c357b443b4b1edbfbf047e6, type: 3}
       propertyPath: sceneDialogue
