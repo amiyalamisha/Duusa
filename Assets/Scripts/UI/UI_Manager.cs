@@ -61,9 +61,9 @@ public class UI_Manager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "1CaveLevelDialogue")
         {
+            
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("dialogue");
                 sceneDialogue.TriggerDialogue();
             }
         }
