@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/0.5Prologue.unity
     guid: 6d601602164ce3c4da61235e85bb4d0f
   - enabled: 1
+    path: Assets/Scenes/0.8CaveLevelDialogue.unity
+    guid: d24be50acdc4bf94e9a2f187038eabb2
+  - enabled: 1
     path: Assets/Scenes/1CaveLevel.unity
     guid: 13028ba5905896148b6ba67a0412e26d
   - enabled: 1

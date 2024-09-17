@@ -59,7 +59,7 @@ public class UI_Manager : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "1CaveLevelDialogue")
+        if (SceneManager.GetActiveScene().name == "0.8CaveLevelDialogue")
         {
             
             if (Input.GetKeyDown(KeyCode.E))

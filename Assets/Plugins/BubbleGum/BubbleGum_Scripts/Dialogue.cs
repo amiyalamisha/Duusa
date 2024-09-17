@@ -228,6 +228,7 @@ public class Dialogue : MonoBehaviour {
 
     void ResetDialogue() //Reset this dialogue when closed, in case it must be triggered again later
     {
+        // call ui manager change scene here --> the instance is not referencing idk why
         dialogueInProgress = false;
         dialogueTriggered = false;
         dialogueStarted = false;
